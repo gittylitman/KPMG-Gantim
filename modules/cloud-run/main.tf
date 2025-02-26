@@ -1,3 +1,8 @@
+resource "google_project_service" "vpcaccess" {
+  service            = "vpcaccess.googleapis.com"
+  disable_on_destroy = false
+}
+
 resource "google_cloud_run_v2_service" "cloud_run"{
   name = var.cloud_run_name
   location = var.location
@@ -19,4 +24,5 @@ resource "google_vpc_access_connector" "connector" {
   subnet {
     name = var.subnet_name
   }
+  depends_on = [ google_project_service.vpcaccess ]
 }

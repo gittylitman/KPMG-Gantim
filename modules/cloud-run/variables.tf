@@ -9,3 +9,11 @@ variable "location" {
 variable "container_image" {
   type = string
 }
+
+variable "vpc_access_connector_name" {
+  type = string
+}
+
+variable "subnet_name" {
+  type = string
+}

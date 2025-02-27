@@ -38,6 +38,7 @@ resource "google_compute_region_target_https_proxy" "https_proxy" {
   region  = var.region
   url_map = google_compute_region_url_map.url_map.id
   ssl_certificates = [ google_compute_managed_ssl_certificate.ssl_cert.id ]
+  depends_on = [ google_compute_managed_ssl_certificate.ssl_cert ]
 }
 
 resource "google_compute_forwarding_rule" "https_forwarding_rule" {

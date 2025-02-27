@@ -1,48 +1,31 @@
 
 
-resource "google_compute_region_network_endpoint_group" "cloud_run_neg_admin" {
-  name                  = "cloud-run-admin-neg"
+resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
+  name                  = var.neg_name[count.index]
   region                = var.region
   network_endpoint_type = "SERVERLESS"
   cloud_run {
-    service = "admin-cr"
+    service = var.cloud_run_name[count.index]
   }
+  count = length(var.neg_name)
 }
 
-resource "google_compute_region_backend_service" "backend_service_admin" {
-  name                  = "internal-backend-service-admin"
+resource "google_compute_region_backend_service" "backend_service" {
+  name                  = var.backend_service_name[count.index]
   region                = var.region
   protocol              = "HTTPS"
   load_balancing_scheme = "INTERNAL_MANAGED"
   backend {
-    group = google_compute_region_network_endpoint_group.cloud_run_neg_admin.id
+    group = google_compute_region_network_endpoint_group.cloud_run_neg[count.index].id
   }
-}
-
-resource "google_compute_region_network_endpoint_group" "cloud_run_neg_citizen" {
-  name                  = "cloud-run-neg-citizen"
-  region                = var.region
-  network_endpoint_type = "SERVERLESS"
-  cloud_run {
-    service = "citizen-cr"
-  }
-}
-
-resource "google_compute_region_backend_service" "backend_service_citizen" {
-  name                  = "internal-backend-service-citizen"
-  region                = var.region
-  protocol              = "HTTPS"
-  load_balancing_scheme = "INTERNAL_MANAGED"
-  backend {
-    group = google_compute_region_network_endpoint_group.cloud_run_neg_citizen.id
-  }
+  count = length(var.backend_service_name)
 }
 
 resource "google_compute_region_url_map" "url_map" {
-  name   = "internal-url-map"
+  name   = "internal-load-balancer"
   region = var.region
 
-  default_service = google_compute_region_backend_service.backend_service_admin.id  # ברירת מחדל: admin-cr
+  default_service = google_compute_region_backend_service.backend_service[1].id 
 
   host_rule {
     hosts        = ["*"]
@@ -52,36 +35,36 @@ resource "google_compute_region_url_map" "url_map" {
   path_matcher {
     name = "path-matcher-1"
 
-    default_service = google_compute_region_backend_service.backend_service_admin.id  # ברירת מחדל: admin-cr
+    default_service = google_compute_region_backend_service.backend_service[1].id
 
     path_rule {
-      paths   = ["/citizen"]
-      service = google_compute_region_backend_service.backend_service_citizen.id
+      paths   = ["/admin"]
+      service = google_compute_region_backend_service.backend_service[0].id
     }
   }
 }
 
-resource "google_compute_managed_ssl_certificate" "ssl_cert" {
-  name    = "my-managed-ssl-cert"
-  managed {
-    domains = ["sslcert.tf"]
-  }
+resource "google_compute_region_ssl_certificate" "ssl_cert" {
+  region      = var.region
+  name        = var.certificate_name
+  private_key = file("./private_key.pem")
+  certificate = file("./certificate.pem")
 }
 
-# resource "google_compute_region_target_https_proxy" "https_proxy" {
-#   name    = "internal-https-proxy"
-#   region  = var.region
-#   url_map = google_compute_region_url_map.url_map.id
-#   ssl_certificates = [ google_compute_managed_ssl_certificate.ssl_cert.id ]
-#   depends_on = [ google_compute_managed_ssl_certificate.ssl_cert ]
-# }
+resource "google_compute_region_target_https_proxy" "https_proxy" {
+  name    = var.http_proxy_name
+  region  = var.region
+  url_map = google_compute_region_url_map.url_map.id
+  ssl_certificates = [ google_compute_region_ssl_certificate.ssl_cert.id ]
+  depends_on = [ google_compute_region_ssl_certificate.ssl_cert ]
+}
 
-# resource "google_compute_forwarding_rule" "https_forwarding_rule" {
-#   name                  = "internal-https-forwarding-rule"
-#   region                = var.region
-#   load_balancing_scheme = "INTERNAL_MANAGED"
-#   target                = google_compute_region_target_https_proxy.https_proxy.id
-#   port_range            = "443"
-#   network               = var.vpc_name
-#   subnetwork            = var.subnet_name
-# }
+resource "google_compute_forwarding_rule" "https_forwarding_rule" {
+  name                  = var.https_forwarding_rule
+  region                = var.region
+  load_balancing_scheme = "INTERNAL_MANAGED"
+  target                = google_compute_region_target_https_proxy.https_proxy.id
+  port_range            = "443"
+  network               = var.vpc_name
+  subnetwork            = var.subnet_name
+}

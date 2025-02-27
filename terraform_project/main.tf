@@ -15,11 +15,14 @@ module "network" {
 
 }
 
-module "backend_service" {
+module "load_balancer" {
   source = "../modules/load-balancer"
 
   region = var.location
   vpc_name = module.network.network_name
   subnet_name = module.network.subnet_name
   cloud_run_name = "admin-cr"
+  certificate_name = "certificate-gantim"
+  http_proxy_name = "internal-https-proxy"
+  https_forwarding_rule = "https_forwarding_rule"
 }

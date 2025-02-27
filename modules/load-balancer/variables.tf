@@ -2,6 +2,16 @@ variable "region" {
   type = string
 }
 
+variable "neg_name" {
+  type = list(string)
+  default = [ "cloud-run-admin-neg", "cloud-run-citizen-neg" ]
+}
+
+variable "backend_service_name" {
+  type = list(string)
+  default = [ "internal-backend-service-admin", "internal-backend-service-citizen" ]
+}
+
 variable "vpc_name" {
   type = string
 }
@@ -11,5 +21,17 @@ variable "subnet_name" {
 }
 
 variable "cloud_run_name" {
-  type = string
+  type = list(string)
 } 
+
+variable "certificate_name" {
+  type = string
+}
+
+variable "http_proxy_name" {
+  type = string 
+}
+
+variable "https_forwarding_rule" {
+  default = string
+}

@@ -20,5 +20,6 @@ module "cloud_run" {
   container_image = "us-docker.pkg.dev/cloudrun/container/hello"
   vpc_access_connector_name = var.access_connector_name[count.index]
   subnet_name = module.network.subnet_name
+  connector_max_instances = 3
   count = length(var.cloud_run_name)
 }

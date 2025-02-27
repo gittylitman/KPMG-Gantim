@@ -17,3 +17,7 @@ variable "vpc_access_connector_name" {
 variable "subnet_name" {
   type = string
 }
+
+variable "connector_max_instances" {
+  type = number
+}

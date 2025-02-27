@@ -24,5 +24,6 @@ resource "google_vpc_access_connector" "connector" {
   subnet {
     name = var.subnet_name
   }
+  max_instances = var.connector_max_instances
   depends_on = [ google_project_service.vpcaccess ]
 }

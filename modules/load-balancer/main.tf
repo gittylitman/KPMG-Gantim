@@ -10,7 +10,7 @@ resource "google_compute_region_network_endpoint_group" "cloud_run_neg_admin" {
 }
 
 resource "google_compute_region_backend_service" "backend_service_admin" {
-  name                  = "internal-backend-service_admin"
+  name                  = "internal-backend-service-admin"
   region                = var.region
   protocol              = "HTTPS"
   load_balancing_scheme = "INTERNAL_MANAGED"

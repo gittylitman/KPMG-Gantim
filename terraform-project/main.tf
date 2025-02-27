@@ -9,7 +9,7 @@ module "bigquery" {
   source = "../modules/bigquery"
   dataset_id = "try_my_dataset"
   location = "me-west1"
-  role = "BigQuery Data Editor"
+  role = "bigquery.dataEditor"
   service_account_vm_name = "try-serviceaccount-vm"
   tables = [
     {

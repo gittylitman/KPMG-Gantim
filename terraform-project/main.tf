@@ -10,7 +10,7 @@ module "network" {
   vpc_name = "gantim"
   subnetwork_name = "snet-gantim"
   region = var.location
-  ip_cidr_range = "10.1.0.0/24"
+  ip_cidr_range = "10.1.0.0/28"
 }
 
 module "cloud_run" {

@@ -9,5 +9,5 @@ variable "cloud_run_name" {
 
 variable "access_connector_name" {
   type = list(string)
-  default = [ "access-connector-admin-1", "access-connector-citizen-1" ]
+  default = [ "access-connector-admin", "access-connector-citizen" ]
 }

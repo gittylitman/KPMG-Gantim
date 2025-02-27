@@ -1,6 +1,12 @@
+resource "google_project_service" "iam" {
+  service            = "iam.googleapis.com"
+  disable_on_destroy = false
+}
+
 resource "google_service_account" "vm_instance_service_account" {
   account_id   = var.service_account_vm_name
   display_name = "Custom SA for VM Instance"
+  depends_on = [ google_project_service.iam ]
 }
 
 resource "google_compute_instance" "ubuntu_vm"{

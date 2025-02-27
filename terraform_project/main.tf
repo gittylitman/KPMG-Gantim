@@ -10,7 +10,7 @@ module "network" {
   vpc_name = "gantim-network"
   subnetwork_name = "gantim-subnetwork"
   region = var.region
-  ip_cidr_range = "10.1.0.0/28"
+  ip_cidr_range = "10.2.0.0/28"
 }
 
 module "ubuntu_vm" {

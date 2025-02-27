@@ -28,9 +28,8 @@ resource "google_compute_region_url_map" "url_map" {
 resource "google_compute_managed_ssl_certificate" "ssl_cert" {
   name    = "my-managed-ssl-cert"
   managed {
-    domains = ["sslcert.tf-test.club."]
+    domains = ["sslcert.tf"]
   }
-
 }
 
 resource "google_compute_region_target_https_proxy" "https_proxy" {

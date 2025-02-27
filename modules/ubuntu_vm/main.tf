@@ -46,5 +46,5 @@ resource "google_compute_firewall" "rules" {
     protocol  = "tcp"
     ports     = ["22", "8080", "1000-2000"]
   }
-
+  source_service_accounts = [google_service_account.vm_instance_service_account]
 }

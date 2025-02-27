@@ -9,3 +9,7 @@ variable "vpc_name" {
 variable "subnet_name" {
   type = string
 }
+
+variable "cloud_run_name" {
+  type = string
+} 

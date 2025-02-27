@@ -25,10 +25,19 @@ resource "google_compute_region_url_map" "url_map" {
   default_service = google_compute_region_backend_service.backend_service.id
 }
 
+resource "google_compute_managed_ssl_certificate" "ssl_cert" {
+  name    = "my-managed-ssl-cert"
+  managed {
+    domains = ["sslcert.tf-test.club."]
+  }
+
+}
+
 resource "google_compute_region_target_https_proxy" "https_proxy" {
   name    = "internal-https-proxy"
   region  = var.region
   url_map = google_compute_region_url_map.url_map.id
+  ssl_certificates = [ google_compute_managed_ssl_certificate.ssl_cert.id ]
 }
 
 resource "google_compute_forwarding_rule" "https_forwarding_rule" {

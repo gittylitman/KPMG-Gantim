@@ -7,14 +7,24 @@ resource "google_compute_instance" "ubuntu_vm"{
     name = var.vm_name
     machine_type = var.machine_type
     zone = var.zone
+    
     boot_disk {
       initialize_params {
         image = var.image
       }
     }
+
     network_interface {
-      network = var.network
+      network = var.network_name
+      subnetwork = var.subnetwork_name
     }
+
+    metadata_startup_script = <<-EOT
+      #!/bin/bash
+      sudo apt update && sudo apt upgrade -y
+      sudo apt install -y ubuntu-gnome-desktop
+    EOT
+
     service_account {
       email = google_service_account.vm_instance_service_account.email
       scopes = ["cloud-platform"]

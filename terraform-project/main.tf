@@ -5,11 +5,6 @@ terraform {
   }
 }
 
-resource "google_project_service" "cloudresourcemanager" {
-  service            = "cloudresourcemanager.googleapis.com"
-  disable_on_destroy = false
-}
-
 module "network" {
   source = "../modules/network"
   vpc_name = "gantim"
@@ -26,5 +21,4 @@ module "cloud_run" {
   vpc_access_connector_name = var.access_connector_name[count.index]
   subnet_name = module.network.subnet_name
   count = length(var.cloud_run_name)
-  depends_on = [ google_project_service.cloudresourcemanager ]
 }

@@ -8,7 +8,7 @@ terraform {
 module "bigquery" {
   source = "../modules/bigquery"
   dataset_id = "try_my_dataset"
-  location = "me-west-1"
+  location = "me-west1"
   role = "BigQuery Data Editor"
   service_account_vm_name = "try-serviceaccount-vm"
   tables = [

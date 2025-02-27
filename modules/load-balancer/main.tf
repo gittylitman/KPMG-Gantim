@@ -39,12 +39,6 @@ resource "google_compute_region_backend_service" "backend_service_citizen" {
 }
 
 resource "google_compute_region_url_map" "url_map" {
-  name            = "internal-url-map"
-  region          = var.region
-  default_service = google_compute_region_backend_service.backend_service_admin.id
-}
-
-resource "google_compute_region_url_map" "url_map" {
   name   = "internal-url-map"
   region = var.region
 

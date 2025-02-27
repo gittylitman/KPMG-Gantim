@@ -36,3 +36,15 @@ resource "google_compute_instance" "ubuntu_vm"{
       scopes = ["cloud-platform"]
     }
 }
+
+resource "google_compute_firewall" "rules" {
+  name        = "my-firewall-rule"
+  network     = var.network_name
+  description = "Creates firewall rule targeting tagged instances"
+
+  allow {
+    protocol  = "tcp"
+    ports     = ["22", "8080", "1000-2000"]
+  }
+
+}

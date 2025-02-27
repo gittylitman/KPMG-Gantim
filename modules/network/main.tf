@@ -10,4 +10,5 @@ resource "google_compute_subnetwork" "subnetwork" {
   ip_cidr_range = var.ip_cidr_range
   network       = google_compute_network.vpc_network.id
   private_ip_google_access = true
+  purpose = "REGIONAL_MANAGED_PROXY"
 }

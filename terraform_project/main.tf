@@ -11,7 +11,7 @@ module "network" {
   vpc_name = "gantim"
   subnetwork_name = "snet-gantim"
   region = var.location
-  ip_cidr_range = "10.1.0.0/28"
+  ip_cidr_range = "10.1.0.0/24"
 
 }
 

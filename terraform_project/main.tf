@@ -21,4 +21,5 @@ module "backend_service" {
   region = var.location
   vpc_name = module.network.network_name
   subnet_name = module.network.subnet_name
+  cloud_run_name = "admin-cr"
 }

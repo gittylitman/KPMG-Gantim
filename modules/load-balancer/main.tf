@@ -63,7 +63,7 @@ resource "google_compute_forwarding_rule" "https_forwarding_rule" {
   name                  = var.https_forwarding_rule_name
   region                = var.region
   load_balancing_scheme = "INTERNAL_MANAGED"
-  target                = google_compute_region_target_https_proxy.https_proxy.id
+  target                = google_compute_region_target_https_proxy.https_proxy.self_link
   port_range            = "443"
   network               = var.vpc_name
   subnetwork            = var.subnet_name

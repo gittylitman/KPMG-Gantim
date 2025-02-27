@@ -21,8 +21,10 @@ module "load_balancer" {
   region = var.location
   vpc_name = module.network.network_name
   subnet_name = module.network.subnet_name
-  cloud_run_name =  [ "cloud-run-admin-neg", "cloud-run-citizen-neg" ]
+  cloud_run_name =  [ "admin-cr", "citizen-cr" ]
   certificate_name = "certificate-gantim"
   http_proxy_name = "internal-https-proxy"
   https_forwarding_rule_name = "https-forwarding-rule"
+
+  
 }

@@ -24,5 +24,5 @@ module "load_balancer" {
   cloud_run_name = "admin-cr"
   certificate_name = "certificate-gantim"
   http_proxy_name = "internal-https-proxy"
-  https_forwarding_rule = "https_forwarding_rule"
+  https_forwarding_rule_name = "https_forwarding_rule"
 }

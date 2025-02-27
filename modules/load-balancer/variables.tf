@@ -32,6 +32,6 @@ variable "http_proxy_name" {
   type = string 
 }
 
-variable "https_forwarding_rule" {
+variable "https_forwarding_rule_name" {
   default = string
 }

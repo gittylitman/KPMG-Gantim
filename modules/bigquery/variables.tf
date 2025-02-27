@@ -10,7 +10,7 @@ variable "role" {
   type = string
 }
 
-variable "cloud_run_service_account" {
+variable "service_account_vm_name" {
   type = string
 }
 

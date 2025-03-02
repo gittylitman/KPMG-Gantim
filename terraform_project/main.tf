@@ -33,6 +33,7 @@ module "bigquery" {
   dataset_id = var.dataset_id
   location = var.location
   role = var.role
-  cloud_run_service_account = module.cloud_run.uri
+  cloud_run_service_account = module.cloud_run.uri[count.index]
   tables = var.table
+  count = length(module.cloud_run.uri)
 }

@@ -2,6 +2,8 @@ variable "project_id" {
   type = string
 }
 
+# module network
+
 variable "vpc_name" {
   type = string
 }
@@ -19,6 +21,8 @@ variable "ip_cidr_range" {
   type = string
   description = "ip range for subnet - /28"
 }
+
+# module cloud run
 
 variable "cloud_run_names" {
   type = list(string)
@@ -40,6 +44,8 @@ variable "connector_min_instances" {
 variable "connector_max_instances" {
   type = number
 }
+
+# module load_balancer
 
 variable "neg_names" {
   type = list(string)
@@ -81,6 +87,8 @@ variable "private_key_file" {
   type = string
 }
 
+# module vm instance
+
 variable "service_account_vm_name" {
   type = string
 }
@@ -92,6 +100,8 @@ variable "zone_part" {
 variable "vm_name" {
   type = string
 }
+
+# module cloud storage
 
 variable "cloud_storage_name" {
   type = list(string)

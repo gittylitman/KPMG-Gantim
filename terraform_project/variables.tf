@@ -67,7 +67,7 @@ variable "backend_service_names" {
 
 variable "proxy_subnet_range" {
   type = string
-  default = "10.1.0.0/26"
+  default = "10.2.0.0/26"
 }
 
 variable "cert_file" {

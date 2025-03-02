@@ -81,7 +81,17 @@ variable "private_key_file" {
   type = string
 }
 
+variable "service_account_vm_name" {
+  type = string
+}
 
+variable "zone_part" {
+  type = string
+}
+
+variable "vm_name" {
+  type = string
+}
 
 variable "cloud_storage_name" {
   type = list(string)

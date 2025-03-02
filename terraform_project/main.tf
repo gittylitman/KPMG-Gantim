@@ -49,6 +49,15 @@ module "load_balancer" {
   depends_on = [ module.cloud_run ]
 }
 
+module "ubuntu_vm_instance" {
+  source = "../modules/ubuntu_vm"
+  service_account_vm_name = var.service_account_vm_name
+  zone = "${var.region}-${var.zone_part}"
+  vm_name = var.vm_name
+  network_name = module.network.network_name
+  subnetwork_name = module.network.subnet_name
+}
+
 module "cloud_storage" {
   source = "../modules/cloud_storage"
   name = var.cloud_storage_name[count.index]

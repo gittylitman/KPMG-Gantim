@@ -67,7 +67,7 @@ module "cloud_storage" {
 
 module "bigquery" {
   source = "../modules/bigquery"
-  dataset_id = "${var.environment}-dataset-${var.region}"
+  dataset_id = "${var.environment}_dataset"
   location = var.region
   tables = var.tables
 }

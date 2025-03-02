@@ -17,9 +17,8 @@ resource "google_bigquery_table" "bigquery_table" {
   ])
 }
 
-# resource "google_bigquery_dataset_iam_member" "bq_access" {
-#   dataset_id = google_bigquery_dataset.bigquery_dataset.dataset_id
-#   role       = "roles/${var.role}"
-#   member     = "serviceAccount:${var.cloud_run_service_account}"
-#   # count = length(var.cloud_run_service_account)
-# }
+resource "google_bigquery_dataset_iam_member" "bq_access" {
+  dataset_id = google_bigquery_dataset.bigquery_dataset.dataset_id
+  role       = "roles/${var.role}"
+  member     = "serviceAccount:${var.cloud_run_service_account}"
+}

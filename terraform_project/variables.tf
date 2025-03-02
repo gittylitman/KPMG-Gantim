@@ -1,6 +1,6 @@
 variable "project_id" {
   type = string
-  default = "gantim-tf"
+  default = "kpmg-gantim-452112"
 }
 
 variable location {

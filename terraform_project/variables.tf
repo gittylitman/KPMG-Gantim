@@ -21,7 +21,7 @@ variable "region" {
 
 variable "dataset_id"{
   type = string
-  default = "gantim-dataset"
+  default = "gantim_dataset"
 }
 
 variable "role" {

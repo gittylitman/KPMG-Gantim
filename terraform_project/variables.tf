@@ -1,6 +1,16 @@
+variable "bucket_name" {
+  type = string
+  default = "gantim-tf"
+}
+
+variable "prefix" {
+  type = string
+  default = "state"
+}
+
 variable "project_id" {
   type = string
-  default = "gantim-dev"
+  default = "kpmg-gantim-452112"
 }
 
 variable "project_name" {

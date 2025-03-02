@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
-    bucket  = "terraform-gantim"
-    prefix  = "state"
+    bucket  = var.bucket_name
+    prefix  = var.prefix
   }
 }
 

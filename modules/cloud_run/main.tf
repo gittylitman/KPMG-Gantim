@@ -31,7 +31,7 @@ resource "google_cloud_run_v2_service" "cloud_run"{
       connector = google_vpc_access_connector.connector.id
       egress = "ALL_TRAFFIC"
     }
-    service_account = google_service_account.cloudrun_service_account.id
+    service_account = google_service_account.cloudrun_service_account.email
   }
   depends_on = [ google_bigquery_dataset_iam_member.bq_access ]
 }

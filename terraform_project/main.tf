@@ -32,8 +32,13 @@ module "bigquery" {
   source = "../modules/bigquery"
   dataset_id = var.dataset_id
   location = var.location
+  tables = var.table
+}
+
+module "connect_cloud_run"{
+  source = "../modules/connect_cloud_run_to_bigquery"
+  dataset_id = module.bigquery.dataset_id
   role = var.role
   cloud_run_service_account = module.cloud_run[count.index].uri
-  tables = var.table
-  count = length(module.cloud_run)
+  count = length(var.cloud_run_name)
 }

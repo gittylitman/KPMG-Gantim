@@ -14,9 +14,15 @@ resource "google_vpc_access_connector" "connector" {
   depends_on = [ google_project_service.vpcaccess ]
 }
 
+resource "google_project_service" "iam" {
+  service            = "iam.googleapis.com"
+  disable_on_destroy = false
+}
+
 
 resource "google_service_account" "cloudrun_service_account" {
   account_id = var.service_account_name
+  depends_on = [ google_project_service.iam ]
 }
 
 resource "google_cloud_run_v2_service" "cloud_run"{

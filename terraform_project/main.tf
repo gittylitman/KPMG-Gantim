@@ -35,7 +35,7 @@ module "load_balancer" {
   neg_name = ["neg-${var.neg_names[0]}", "neg-${var.neg_names[1]}"]
   backend_service_name = ["backend-${var.backend_service_names[0]}", "backend-${var.backend_service_names[1]}"]
   vpc_name = module.network.network_name
-  subnet_name = module.network.subnet_name
+  subnet_name = "${var.environment}-proxysubnet-${var.region}"
   lb_name = "lb-${var.region}"
   cloud_run_names = ["${var.cloud_run_names[0]}-${var.region}", "${var.cloud_run_names[1]}-${var.region}"]
   certificate_name = "${var.environment}-certificate-${var.region}"
@@ -43,7 +43,7 @@ module "load_balancer" {
   https_forwarding_rule_name = "${var.environment}-httpsrule-${var.region}"
   network_id = module.network.network_id
   ip_range = var.proxy_subnet_range
-  subnet_private_name = "${var.environment}-proxysubnet-${var.region}"
+  subnet_private_name = module.network.subnet_name
   cert_file = var.cert_file
   private_key_file = var.private_key_file
   depends_on = [ module.cloud_run ]

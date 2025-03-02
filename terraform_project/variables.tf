@@ -121,3 +121,8 @@ variable "tables" {
     }
   ]
 }
+
+variable "role_connect_cloud_run" {
+  type = string
+  default = "bigquery.dataViewer"
+}

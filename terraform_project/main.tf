@@ -72,3 +72,11 @@ module "bigquery" {
   location = var.region
   tables = var.tables
 }
+
+module "connect_cloudrun" {
+  source = "../modules/connect_cloudrun_to_bigquery"
+  dataset_id = module.bigquery.dataset_id
+  role = var.role_connect_cloud_run
+  cloud_run_service_account = module.cloud_run[count.index].email
+  count = length(var.cloud_run_names)
+}

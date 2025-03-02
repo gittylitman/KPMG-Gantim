@@ -54,7 +54,7 @@ variable "connector_max_instances" {
 
 variable "role_connect_big_query" {
   type = string
-  default = "bigquery.dataViewer"
+  default = "bigquery.dataEditor"
 }
 
 # module load_balancer

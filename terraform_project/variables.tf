@@ -41,6 +41,48 @@ variable "connector_max_instances" {
   type = number
 }
 
+variable "neg_names" {
+  type = list(string)
+}
+
+variable "backend_service_names" {
+  type = list(string)
+}
+
+variable "lb_name" {
+  type = string
+}
+
+variable "certificate_name" {
+  type = string
+}
+
+variable "http_proxy_name" {
+  type = string
+}
+
+variable "https_forwarding_rule_name" {
+  type = string
+}
+
+variable "proxy_subnet_range" {
+  type = string
+}
+
+variable "proxy_subnet_name" {
+  type = string
+}
+
+variable "cert_file" {
+  type = string
+}
+
+variable "private_key_file" {
+  type = string
+}
+
+
+
 variable "cloud_storage_name" {
   type = list(string)
 }

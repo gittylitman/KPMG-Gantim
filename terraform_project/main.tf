@@ -34,10 +34,5 @@ module "load_balancer" {
   certificate_name = "certificate-gantim"
   http_proxy_name = "internal-https-proxy"
   https_forwarding_rule_name = "https-forwarding-rule"
-  ip_range = "10.2.0.0/28"
-  backend_snet_name = "snet-back"
-  network_id = module.network.network_id
   subnet_proxy_name = module.proxy_subnet.proxy_subnet_name
-
-  
 }

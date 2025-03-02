@@ -36,18 +36,6 @@ variable "https_forwarding_rule_name" {
   type = string
 }
 
-variable "backend_snet_name" {
-  type = string
-}
-
-variable "ip_range" {
-  type = string
-}
-
-variable "network_id" {
-  type = string
-}
-
 variable "subnet_proxy_name" {
   type = string
 }

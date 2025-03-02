@@ -10,14 +10,6 @@ resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
   count = length(var.neg_name)
 }
 
-resource "google_compute_subnetwork" "ilb_subnet" {
-  name          = var.backend_snet_name
-  ip_cidr_range = var.ip_range
-  region        = var.region
-  network       = var.network_id
-}
-
-
 resource "google_compute_region_backend_service" "backend_service" {
   name                  = var.backend_service_name[count.index]
   region                = var.region

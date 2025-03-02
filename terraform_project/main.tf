@@ -24,7 +24,7 @@ module "cloud_run" {
   container_image = var.container_image
   vpc_access_connector_name = "accessconnector${var.access_connector_names[count.index]}"
   subnet_name = module.network.subnet_name
-  service_account_name = "${environment}-sa-${var.cloud_run_names[count.index]}"
+  service_account_name = "${var.environment}-sa-${var.cloud_run_names[count.index]}"
   connector_min_instances = var.connector_min_instances
   connector_max_instances = var.connector_max_instances
   count = length(var.cloud_run_names)

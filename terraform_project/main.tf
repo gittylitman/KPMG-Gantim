@@ -32,11 +32,11 @@ module "cloud_run" {
 module "load_balancer" {
   source = "../modules/load_balancer"
   region = var.region
-  neg_name = "${var.environment}-neg-${var.neg_names[count.index]}-${var.region}"
-  backend_service_name = "${var.environment}-backend-${var.backend_service_names[count.index]}-${var.region}"
+  neg_name = "neg-${var.neg_names[count.index]}"
+  backend_service_name = "backend-${var.backend_service_names[count.index]}"
   vpc_name = module.network.network_name
   subnet_name = module.network.subnet_name
-  lb_name = "${var.environment}-lb-${var.region}"
+  lb_name = "lb-${var.region}"
   cloud_run_names = "${var.environment}-cloudrun-${var.cloud_run_names[count.index]}-${var.region}"
   certificate_name = "${var.environment}-certificate-${var.region}"
   http_proxy_name = "${var.environment}-httpproxy-${var.region}"

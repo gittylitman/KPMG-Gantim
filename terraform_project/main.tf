@@ -19,7 +19,7 @@ module "network" {
 
 module "cloud_run" {
   source = "../modules/cloud_run"
-  cloud_run_name = "${var.environment}-cloudrun-${var.cloud_run_names[count.index]}-${var.region}"
+  cloud_run_name = "${var.cloud_run_names[count.index]}-${var.region}"
   location = var.region
   container_image = var.container_image
   vpc_access_connector_name = "${var.environment}-accessconnector-${var.access_connector_names[count.index]}-${var.region}"
@@ -37,7 +37,7 @@ module "load_balancer" {
   vpc_name = module.network.network_name
   subnet_name = module.network.subnet_name
   lb_name = "lb-${var.region}"
-  cloud_run_names = "${var.environment}-cloudrun-${var.cloud_run_names[count.index]}-${var.region}"
+  cloud_run_names = "${var.cloud_run_names[count.index]}-${var.region}"
   certificate_name = "${var.environment}-certificate-${var.region}"
   http_proxy_name = "${var.environment}-httpproxy-${var.region}"
   https_forwarding_rule_name = "${var.environment}-httpsrule-${var.region}"

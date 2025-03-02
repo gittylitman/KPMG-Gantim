@@ -17,6 +17,13 @@ module "network" {
   ip_cidr_range = var.ip_cidr_range
 }
 
+module "bigquery" {
+  source = "../modules/bigquery"
+  dataset_id = "${var.environment}_dataset"
+  location = var.region
+  tables = var.tables
+}
+
 module "cloud_run" {
   source = "../modules/cloud_run"
   cloud_run_name = "${var.cloud_run_names[count.index]}-${var.region}"
@@ -27,6 +34,8 @@ module "cloud_run" {
   service_account_name = "${var.environment}-sa-${var.cloud_run_names[count.index]}"
   connector_min_instances = var.connector_min_instances
   connector_max_instances = var.connector_max_instances
+  dataset_id = module.bigquery.dataset_id
+  role = var.role_connect_big_query
   count = length(var.cloud_run_names)
 }
 
@@ -64,19 +73,4 @@ module "cloud_storage" {
   name = "${var.environment}-gcs-${var.cloud_storage_name[count.index]}-${var.region}"
   location = var.region
   count = length(var.cloud_storage_name)
-}
-
-module "bigquery" {
-  source = "../modules/bigquery"
-  dataset_id = "${var.environment}_dataset"
-  location = var.region
-  tables = var.tables
-}
-
-module "connect_cloudrun" {
-  source = "../modules/connect_cloudrun_to_bigquery"
-  dataset_id = module.bigquery.dataset_id
-  role = var.role_connect_cloud_run
-  cloud_run_service_account = module.cloud_run[count.index].email
-  count = length(var.cloud_run_names)
 }

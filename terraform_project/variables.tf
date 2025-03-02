@@ -52,6 +52,11 @@ variable "connector_max_instances" {
   default = 4
 }
 
+variable "role_connect_big_query" {
+  type = string
+  default = "bigquery.dataViewer"
+}
+
 # module load_balancer
 
 variable "neg_names" {
@@ -120,9 +125,4 @@ variable "tables" {
       ]
     }
   ]
-}
-
-variable "role_connect_cloud_run" {
-  type = string
-  default = "bigquery.dataViewer"
 }

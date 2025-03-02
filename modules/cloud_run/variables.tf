@@ -29,3 +29,11 @@ variable "connector_min_instances" {
 variable "connector_max_instances" {
   type = number
 }
+
+variable "dataset_id" {
+  type = string
+}
+
+variable "role" {
+  type = string
+}

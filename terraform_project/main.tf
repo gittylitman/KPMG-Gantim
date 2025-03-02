@@ -38,12 +38,12 @@ module "load_balancer" {
   subnet_name = module.network.subnet_name
   lb_name = "${project_name}-${environment}-lb-${var.region}"
   cloud_run_names = "${project_name}-${environment}-cloudrun-${var.cloud_run_names[count.index]}-${var.region}"
-  certificate_name = var.certificate_name
-  http_proxy_name = var.http_proxy_name
-  https_forwarding_rule_name = var.https_forwarding_rule_name
+  certificate_name = "${project_name}-${environment}-certificate-${var.region}"
+  http_proxy_name = "${project_name}-${environment}-httpproxy-${var.region}"
+  https_forwarding_rule_name = "${project_name}-${environment}-httpsrule-${var.region}"
   network_id = module.network.network_id
   ip_range = var.proxy_subnet_range
-  subnet_private_name = var.proxy_subnet_name
+  subnet_private_name = "${project_name}-${environment}-proxysubnet-${var.region}"
   cert_file = var.cert_file
   private_key_file = var.private_key_file
   depends_on = [ module.cloud_run ]
@@ -63,4 +63,11 @@ module "cloud_storage" {
   name = "${project_name}-${environment}-gcs-${var.cloud_storage_name[count.index]}-${var.region}"
   location = var.region
   count = length(var.cloud_storage_name)
+}
+
+module "bigquery" {
+  source = "../modules/bigquery"
+  dataset_id = "${project_name}-${environment}-dataset-${var.region}"
+  location = var.region
+  tables = var.tables
 }

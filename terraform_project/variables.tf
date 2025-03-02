@@ -65,32 +65,19 @@ variable "backend_service_names" {
   default = ["admin", "citizen"]
 }
 
-variable "certificate_name" {
-  type = string
-}
-
-variable "http_proxy_name" {
-  type = string
-}
-
-variable "https_forwarding_rule_name" {
-  type = string
-}
-
 variable "proxy_subnet_range" {
   type = string
-}
-
-variable "proxy_subnet_name" {
-  type = string
+  default = "10.2.0.0/26"
 }
 
 variable "cert_file" {
   type = string
+  default = "./certificate.pem"
 }
 
 variable "private_key_file" {
   type = string
+  default = "./private_key.pem"
 }
 
 # module vm instance
@@ -105,4 +92,33 @@ variable "zone_part" {
 variable "cloud_storage_name" {
   type = list(string)
   default = ["admin", "citizen"]
+}
+
+# module bigquery
+
+variable "tables" {
+  type = list(object({
+    table_name = string
+    columns     = list(object({
+      name   = string
+      type   = string
+      mode   = string
+    }))
+  }))
+  default = [
+    {
+      table_name = "table1"
+      columns = [
+        { name = "column1", type = "STRING", mode = "NULLABLE" },
+        { name = "column2", type = "STRING", mode = "NULLABLE" }
+      ]
+    },
+    {
+      table_name = "table2"
+      columns = [
+        { name = "columnA", type = "STRING", mode = "NULLABLE" },
+        { name = "columnB", type = "STRING", mode = "NULLABLE" }
+      ]
+    }
+  ]
 }

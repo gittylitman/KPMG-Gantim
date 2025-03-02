@@ -20,7 +20,7 @@ module "proxy_subnet" {
 
   subnet_name = "proxy-snet"
   region = var.location
-  ip_range = "10.3.0.0/28"
+  ip_range = "10.3.0.0/26"
   network_id = module.network.network_id
 }
 

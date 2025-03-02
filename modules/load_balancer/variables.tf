@@ -4,12 +4,10 @@ variable "region" {
 
 variable "neg_name" {
   type = list(string)
-  default = [ "cloud-run-admin-neg", "cloud-run-citizen-neg" ]
 }
 
 variable "backend_service_name" {
   type = list(string)
-  default = [ "internal-backend-service-admin", "internal-backend-service-citizen" ]
 }
 
 variable "vpc_name" {
@@ -20,7 +18,11 @@ variable "subnet_name" {
   type = string
 }
 
-variable "cloud_run_name" {
+variable "lb_name" {
+  type = string
+}
+
+variable "cloud_run_names" {
   type = list(string)
 } 
 

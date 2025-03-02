@@ -37,6 +37,7 @@ module "cloud_run" {
   dataset_id = module.bigquery.dataset_id
   role = var.role_connect_big_query
   count = length(var.cloud_run_names)
+  depends_on = [ module.bigquery ]
 }
 
 module "load_balancer" {

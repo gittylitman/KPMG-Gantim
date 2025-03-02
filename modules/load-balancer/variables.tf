@@ -43,3 +43,7 @@ variable "network_id" {
 variable "ip_range" {
   type = string
 }
+
+variable "subnet_private_name" {
+  type = string
+}

@@ -15,15 +15,6 @@ module "network" {
 
 }
 
-# module "proxy_subnet" {
-#   source = "../modules/proxy-subnet"
-
-#   subnet_name = "proxy-snet"
-#   region = var.location
-#   ip_range = "10.3.0.0/26"
-#   network_id = module.network.network_id
-# }
-
 module "load_balancer" {
   source = "../modules/load-balancer"
 
@@ -36,4 +27,5 @@ module "load_balancer" {
   https_forwarding_rule_name = "https-forwarding-rule"
   network_id = module.network.network_id
   ip_range = "10.3.0.0/26"
+  subnet_private_name = module.network.subnet_name
 }

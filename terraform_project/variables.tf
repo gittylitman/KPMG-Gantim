@@ -23,7 +23,7 @@ variable "region" {
 variable "ip_cidr_range" {
   type = string
   description = "ip range for subnet - /28"
-  default = "10.1.0.0/28"
+  default = "10.1.0.0/24"
 }
 
 # module cloud run
@@ -67,7 +67,7 @@ variable "backend_service_names" {
 
 variable "proxy_subnet_range" {
   type = string
-  default = "10.2.0.0/26"
+  default = "10.1.0.0/26"
 }
 
 variable "cert_file" {

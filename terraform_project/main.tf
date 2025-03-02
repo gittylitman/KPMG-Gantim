@@ -47,6 +47,7 @@ module "load_balancer" {
   cert_file = var.cert_file
   private_key_file = var.private_key_file
   depends_on = [ module.cloud_run ]
+  count = length(var.cloud_run_names)
 }
 
 module "ubuntu_vm_instance" {

@@ -4,3 +4,7 @@ terraform {
     prefix  = "state"
   }
 }
+
+provider "google" {
+  project = var.project_id
+}

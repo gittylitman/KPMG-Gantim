@@ -1,5 +1,6 @@
 variable "project_id" {
   type = string
+  default = "gantim-tf"
 }
 
 variable location {

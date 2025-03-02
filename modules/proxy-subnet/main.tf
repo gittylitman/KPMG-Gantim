@@ -3,6 +3,6 @@ resource "google_compute_subnetwork" "proxy_subnet" {
   region        = var.region
   ip_cidr_range = var.ip_range
   purpose       = "REGIONAL_MANAGED_PROXY"
-  role          = "ACTIVE"
+  role          = "PRIVATE"
   network       = var.network_id
 }

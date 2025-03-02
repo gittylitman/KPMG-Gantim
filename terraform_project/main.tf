@@ -37,6 +37,7 @@ module "load_balancer" {
   ip_range = "10.2.0.0/28"
   backend_snet_name = "snet-back"
   network_id = module.network.network_id
+  subnet_proxy_name = module.proxy_subnet.proxy_subnet_name
 
   
 }

@@ -47,3 +47,7 @@ variable "ip_range" {
 variable "network_id" {
   type = string
 }
+
+variable "subnet_proxy_name" {
+  type = string
+}

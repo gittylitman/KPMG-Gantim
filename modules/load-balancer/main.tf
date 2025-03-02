@@ -47,8 +47,8 @@ resource "google_compute_region_url_map" "url_map" {
 resource "google_compute_region_ssl_certificate" "ssl_cert" {
   region      = var.region
   name        = var.certificate_name
-  private_key = file("./private_key.pem")
-  certificate = file("./certificate.pem")
+  private_key = file(var.private_key_file)
+  certificate = file(var.cert_file)
 }
 
 resource "google_compute_subnetwork" "proxy_subnet" {

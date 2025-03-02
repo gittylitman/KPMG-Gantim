@@ -28,4 +28,6 @@ module "load_balancer" {
   network_id = module.network.network_id
   ip_range = "10.3.0.0/26"
   subnet_private_name = module.network.subnet_name
+  cert_file = "./certificate.pem"
+  private_key_file = "./private_key.pem"
 }

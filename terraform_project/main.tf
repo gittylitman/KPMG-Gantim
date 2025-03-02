@@ -11,18 +11,18 @@ provider "google" {
 
 module "network" {
   source = "../modules/network"
-  vpc_name = var.vpc_name
-  subnetwork_name = var.subnet_name
+  vpc_name = "${project_name}-${environment}-vpc-${var.region}"
+  subnetwork_name = "${project_name}-${environment}-subnet-${var.region}"
   region = var.region
   ip_cidr_range = var.ip_cidr_range
 }
 
 module "cloud_run" {
   source = "../modules/cloud_run"
-  cloud_run_name = var.cloud_run_names[count.index]
+  cloud_run_name = "${project_name}-${environment}-cloudrun-${var.cloud_run_names[count.index]}-${var.region}"
   location = var.region
   container_image = var.container_image
-  vpc_access_connector_name = var.access_connector_names[count.index]
+  vpc_access_connector_name = "${project_name}-${environment}-accessconnector-${var.access_connector_names[count.index]}-${var.region}"
   subnet_name = module.network.subnet_name
   connector_min_instances = var.connector_min_instances
   connector_max_instances = var.connector_max_instances
@@ -32,12 +32,12 @@ module "cloud_run" {
 module "load_balancer" {
   source = "../modules/load_balancer"
   region = var.region
-  neg_name = var.neg_names
-  backend_service_name = var.backend_service_names
+  neg_name = "${project_name}-${environment}-neg-${var.neg_names[count.index]}-${var.region}"
+  backend_service_name = "${project_name}-${environment}-backend-${var.backend_service_names[count.index]}-${var.region}"
   vpc_name = module.network.network_name
   subnet_name = module.network.subnet_name
-  lb_name = var.lb_name
-  cloud_run_names = var.cloud_run_names
+  lb_name = "${project_name}-${environment}-lb-${var.region}"
+  cloud_run_names = "${project_name}-${environment}-cloudrun-${var.cloud_run_names[count.index]}-${var.region}"
   certificate_name = var.certificate_name
   http_proxy_name = var.http_proxy_name
   https_forwarding_rule_name = var.https_forwarding_rule_name
@@ -51,16 +51,16 @@ module "load_balancer" {
 
 module "ubuntu_vm_instance" {
   source = "../modules/ubuntu_vm"
-  service_account_vm_name = var.service_account_vm_name
+  service_account_vm_name = "${project_name}-${environment}-sa-vm-${var.region}"
   zone = "${var.region}-${var.zone_part}"
-  vm_name = var.vm_name
+  vm_name = "${project_name}-${environment}-vm-${var.region}"
   network_name = module.network.network_name
   subnetwork_name = module.network.subnet_name
 }
 
 module "cloud_storage" {
   source = "../modules/cloud_storage"
-  name = var.cloud_storage_name[count.index]
+  name = "${project_name}-${environment}-gcs-${var.cloud_storage_name[count.index]}-${var.region}"
   location = var.region
   count = length(var.cloud_storage_name)
 }

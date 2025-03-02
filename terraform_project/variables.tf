@@ -1,16 +1,19 @@
 variable "project_id" {
   type = string
+  default = "gantim-dev"
+}
+
+variable "project_name" {
+  type = string
+  default = "gantim"
+}
+
+variable "environment" {
+  type = string
+  default = "dev"
 }
 
 # module network
-
-variable "vpc_name" {
-  type = string
-}
-
-variable "subnet_name" {
-  type = string
-}
 
 variable "region" {
   type = string
@@ -20,12 +23,14 @@ variable "region" {
 variable "ip_cidr_range" {
   type = string
   description = "ip range for subnet - /28"
+  default = "10.1.0.0/28"
 }
 
 # module cloud run
 
 variable "cloud_run_names" {
   type = list(string)
+  default = ["admin", "citizen"]
 }
 
 variable "container_image" {
@@ -35,28 +40,29 @@ variable "container_image" {
 
 variable "access_connector_names" {
   type = list(string)
+  default = [ "admin", "citizen" ]
 }
 
 variable "connector_min_instances" {
   type = number
+  default = 2
 }
 
 variable "connector_max_instances" {
   type = number
+  default = 4
 }
 
 # module load_balancer
 
 variable "neg_names" {
   type = list(string)
+  default = ["admin", "citizen"]
 }
 
 variable "backend_service_names" {
   type = list(string)
-}
-
-variable "lb_name" {
-  type = string
+  default = ["admin", "citizen"]
 }
 
 variable "certificate_name" {
@@ -89,20 +95,14 @@ variable "private_key_file" {
 
 # module vm instance
 
-variable "service_account_vm_name" {
-  type = string
-}
-
 variable "zone_part" {
   type = string
-}
-
-variable "vm_name" {
-  type = string
+  default = "a"
 }
 
 # module cloud storage
 
 variable "cloud_storage_name" {
   type = list(string)
+  default = ["admin", "citizen"]
 }

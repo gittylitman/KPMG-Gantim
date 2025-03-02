@@ -1,3 +1,3 @@
-variable "location" {
-  default = "me-west1"
+variable "project_id" {
+  type = string
 }

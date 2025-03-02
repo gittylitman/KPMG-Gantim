@@ -51,6 +51,15 @@ resource "google_compute_region_ssl_certificate" "ssl_cert" {
   certificate = file("./certificate.pem")
 }
 
+resource "google_compute_subnetwork" "proxy_subnet" {
+  name          = var.subnet_name
+  region        = var.region
+  ip_cidr_range = var.ip_range
+  purpose       = "PRIVATE"
+  role          = "ACTIVE"
+  network       = var.network_id
+}
+
 resource "google_compute_region_target_https_proxy" "https_proxy" {
   name    = var.http_proxy_name
   region  = var.region
@@ -66,5 +75,5 @@ resource "google_compute_forwarding_rule" "https_forwarding_rule" {
   target                = google_compute_region_target_https_proxy.https_proxy.self_link
   port_range            = "443"
   network               = var.vpc_name
-  subnetwork            = var.subnet_proxy_name
+  subnetwork            = google_compute_subnetwork.proxy_subnet.name
 }

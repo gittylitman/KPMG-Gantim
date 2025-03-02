@@ -29,10 +29,12 @@ module "load_balancer" {
 
   region = var.location
   vpc_name = module.network.network_name
-  subnet_name = module.proxy_subnet.proxy_subnet_name
+  subnet_name = "proxy-subnet"
   cloud_run_name =  [ "admin-cr", "citizen-cr" ]
   certificate_name = "certificate-gantim"
   http_proxy_name = "internal-https-proxy"
   https_forwarding_rule_name = "https-forwarding-rule"
-  subnet_proxy_name = module.proxy_subnet.proxy_subnet_name
+  subnet_proxy_name = "module.proxy_subnet.proxy_subnet_name"
+  network_id = module.network.network_id
+  ip_range = ""
 }

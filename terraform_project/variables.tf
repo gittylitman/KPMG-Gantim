@@ -22,7 +22,6 @@ variable "region" {
 
 variable "ip_cidr_range" {
   type = string
-  description = "ip range for subnet - /28"
   default = "10.1.0.0/24"
 }
 

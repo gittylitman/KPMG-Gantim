@@ -1,3 +1,3 @@
-output "uri" {
-    value = google_cloud_run_v2_service.cloud_run.uri
+output "email" {
+    value = google_service_account.cloudrun_service_account.email
 }

@@ -18,6 +18,10 @@ variable "subnet_name" {
   type = string
 }
 
+variable "service_account_name" {
+  type = string
+}
+
 variable "connector_min_instances" {
   type = number
 }

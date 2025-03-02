@@ -17,6 +17,18 @@ module "network" {
   ip_cidr_range = var.ip_cidr_range
 }
 
+module "cloud_run" {
+  source = "../modules/cloud_run"
+  cloud_run_name = var.cloud_run_names[count.index]
+  location = var.region
+  container_image = var.container_image
+  vpc_access_connector_name = var.access_connector_names[count.index]
+  subnet_name = module.network.subnet_name
+  connector_min_instances = var.connector_min_instances
+  connector_max_instances = var.connector_max_instances
+  count = length(var.cloud_run_names)
+}
+
 module "cloud_storage" {
   source = "../modules/cloud_storage"
   name = var.cloud_storage_name[count.index]

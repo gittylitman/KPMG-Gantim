@@ -20,6 +20,27 @@ variable "ip_cidr_range" {
   description = "ip range for subnet - /28"
 }
 
+variable "cloud_run_names" {
+  type = list(string)
+}
+
+variable "container_image" {
+  type = string
+  default = "us-docker.pkg.dev/cloudrun/container/hello"
+}
+
+variable "access_connector_names" {
+  type = list(string)
+}
+
+variable "connector_min_instances" {
+  type = number
+}
+
+variable "connector_max_instances" {
+  type = number
+}
+
 variable "cloud_storage_name" {
   type = list(string)
 }

@@ -18,10 +18,10 @@ variable "subnet_name" {
   type = string
 }
 
-variable "connector_max_instances" {
+variable "connector_min_instances" {
   type = number
 }
 
-variable "connector_min_instances" {
+variable "connector_max_instances" {
   type = number
 }

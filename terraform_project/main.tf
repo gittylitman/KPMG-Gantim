@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
     bucket  = "terraform-gantim"
-    prefix  = "state"
+    prefix  = "state/bigquery"
   }
 }
 
@@ -11,10 +11,10 @@ provider "google" {
 
 module "network" {
   source = "../modules/network"
-  vpc_name = "gantim"
-  subnetwork_name = "snet-gantim"
+  vpc_name = "gantim2"
+  subnetwork_name = "snet-gantim2"
   region = var.location
-  ip_cidr_range = "10.1.0.0/28"
+  ip_cidr_range = "10.2.0.0/28"
 }
 module "cloud_run" {
   source = "../modules/cloud-run"

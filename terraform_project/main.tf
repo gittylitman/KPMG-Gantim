@@ -32,12 +32,12 @@ module "cloud_run" {
 module "load_balancer" {
   source = "../modules/load_balancer"
   region = var.region
-  neg_name = "neg-${var.neg_names[count.index]}"
-  backend_service_name = "backend-${var.backend_service_names[count.index]}"
+  neg_name = ["neg-${var.neg_names[0]}", "neg-${var.neg_names[1]}"]
+  backend_service_name = ["backend-${var.backend_service_names[0]}", "backend-${var.backend_service_names[1]}"]
   vpc_name = module.network.network_name
   subnet_name = module.network.subnet_name
   lb_name = "lb-${var.region}"
-  cloud_run_names = "${var.cloud_run_names[count.index]}-${var.region}"
+  cloud_run_names = ["${var.cloud_run_names[0]}-${var.region}", "${var.cloud_run_names[1]}-${var.region}"]
   certificate_name = "${var.environment}-certificate-${var.region}"
   http_proxy_name = "${var.environment}-httpproxy-${var.region}"
   https_forwarding_rule_name = "${var.environment}-httpsrule-${var.region}"
@@ -47,7 +47,6 @@ module "load_balancer" {
   cert_file = var.cert_file
   private_key_file = var.private_key_file
   depends_on = [ module.cloud_run ]
-  count = length(var.cloud_run_names)
 }
 
 module "ubuntu_vm_instance" {

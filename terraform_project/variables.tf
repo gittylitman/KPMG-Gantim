@@ -5,7 +5,7 @@ variable "project_id" {
 
 variable "project_name" {
   type = string
-  default = "gantim"
+  default = "nec-gnt"
 }
 
 variable "environment" {
@@ -22,24 +22,24 @@ variable "region" {
 
 variable "ip_cidr_range" {
   type = string
-  default = "10.1.0.0/28"
+  default = "100.69.3.0/28"
 }
 
 # module cloud run
 
 variable "cloud_run_names" {
   type = list(string)
-  default = ["admin", "citizen"]
+  default = ["crun-uploader", "crun-metrics"]
 }
 
 variable "container_image" {
   type = string
-  default = "us-docker.pkg.dev/cloudrun/container/hello"
+  default = ["me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/uploader:latest", "me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/metrics:latest"]
 }
 
 variable "access_connector_names" {
   type = list(string)
-  default = [ "admin", "citizen" ]
+  default = [ "vpc-uploader", "vpc-metrics" ]
 }
 
 variable "connector_min_instances" {
@@ -57,21 +57,14 @@ variable "role_connect_big_query" {
   default = "bigquery.dataEditor"
 }
 
-# module load_balancer
-
-variable "neg_names" {
+variable "load_balancer_name" {
   type = list(string)
-  default = ["admin", "citizen"]
-}
-
-variable "backend_service_names" {
-  type = list(string)
-  default = ["admin", "citizen"]
+  default = ["uploader", "metrics"]
 }
 
 variable "proxy_subnet_range" {
   type = string
-  default = "10.2.0.0/26"
+  default = "100.69.4.0/26"
 }
 
 variable "cert_file" {
@@ -95,7 +88,7 @@ variable "zone_part" {
 
 variable "cloud_storage_name" {
   type = list(string)
-  default = ["admin", "citizen"]
+  default = ["uploader", "metrics"]
 }
 
 # module bigquery
@@ -112,13 +105,6 @@ variable "tables" {
   default = [
     {
       table_name = "table1"
-      columns = [
-        { name = "column1", type = "STRING", mode = "NULLABLE" },
-        { name = "column2", type = "STRING", mode = "NULLABLE" }
-      ]
-    },
-    {
-      table_name = "table2"
       columns = [
         { name = "columnA", type = "STRING", mode = "NULLABLE" },
         { name = "columnB", type = "STRING", mode = "NULLABLE" }

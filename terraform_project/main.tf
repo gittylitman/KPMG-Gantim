@@ -11,25 +11,25 @@ provider "google" {
 
 module "network" {
   source = "../modules/network"
-  vpc_name = "${var.environment}-vpc-${var.region}"
-  subnetwork_name = "${var.environment}-subnet-${var.region}"
+  vpc_name = "${var.environment}"
+  subnetwork_name = "${var.project_name}-snet-${var.environment}"
   region = var.region
   ip_cidr_range = var.ip_cidr_range
 }
 
 module "bigquery" {
   source = "../modules/bigquery"
-  dataset_id = "${var.environment}_dataset"
+  dataset_id = "${var.project_name}_bgquery_${var.environment}"
   location = var.region
   tables = var.tables
 }
 
 module "cloud_run" {
   source = "../modules/cloud_run"
-  cloud_run_name = "${var.cloud_run_names[count.index]}-${var.region}"
+  cloud_run_name = "${var.project_name}-${var.cloud_run_names[count.index]}-${var.environment}"
   location = var.region
-  container_image = var.container_image
-  vpc_access_connector_name = "accessconnector${var.access_connector_names[count.index]}"
+  container_image = var.container_image[count.index]
+  vpc_access_connector_name = "${var.project_name}-${var.access_connector_names[count.index]}-${var.environment}"
   subnet_name = module.network.subnet_name
   service_account_name = "${var.environment}-sa-${var.cloud_run_names[count.index]}"
   connector_min_instances = var.connector_min_instances
@@ -43,35 +43,36 @@ module "cloud_run" {
 module "load_balancer" {
   source = "../modules/load_balancer"
   region = var.region
-  neg_name = ["neg-${var.neg_names[0]}", "neg-${var.neg_names[1]}"]
-  backend_service_name = ["backend-${var.backend_service_names[0]}", "backend-${var.backend_service_names[1]}"]
+  neg_name = "${var.project_name}-neg-${var.load_balancer_name[count.index]}-${var.environment}"
+  backend_service_name = "${var.project_name}-bsrv-${var.load_balancer_name[count.index]}-${var.environment}"
   vpc_name = module.network.network_name
-  subnet_name = "${var.environment}-proxysubnet-${var.region}"
-  lb_name = "lb-${var.region}"
-  cloud_run_names = ["${var.cloud_run_names[0]}-${var.region}", "${var.cloud_run_names[1]}-${var.region}"]
-  certificate_name = "${var.environment}-certificate-${var.region}"
-  http_proxy_name = "${var.environment}-httpproxy-${var.region}"
-  https_forwarding_rule_name = "${var.environment}-httpsrule-${var.region}"
+  subnet_name = "${var.project_name}-snet-prxy-${var.environment}"
+  lb_name = "${var.project_name}-ilb-${var.environment}"
+  cloud_run_names = "${var.project_name}-${var.cloud_run_names[count.index]}-${var.environment}"
+  certificate_name = "${var.project_name}-cert-${var.environment}"
+  http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
+  https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"
   network_id = module.network.network_id
   ip_range = var.proxy_subnet_range
   subnet_private_name = module.network.subnet_name
   cert_file = var.cert_file
   private_key_file = var.private_key_file
+  count = length(var.load_balancer_name)
   depends_on = [ module.cloud_run ]
 }
 
 module "ubuntu_vm_instance" {
   source = "../modules/ubuntu_vm"
-  service_account_vm_name = "${var.environment}-sa-vm-${var.region}"
+  service_account_vm_name = "${var.project_name}-ubut-sa-vm-${var.environment}"
   zone = "${var.region}-${var.zone_part}"
-  vm_name = "${var.environment}-vm-${var.region}"
+  vm_name = "${var.project_name}-ubut-vm-${var.environment}"
   network_name = module.network.network_name
   subnetwork_name = module.network.subnet_name
 }
 
 module "cloud_storage" {
   source = "../modules/cloud_storage"
-  name = "${var.environment}-gcs-${var.cloud_storage_name[count.index]}-${var.region}"
+  name = "${var.project_name}-gcs-${var.cloud_storage_name[count.index]}-${var.environment}"
   location = var.region
   count = length(var.cloud_storage_name)
 }

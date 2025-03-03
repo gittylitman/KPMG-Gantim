@@ -22,7 +22,7 @@ variable "region" {
 
 variable "ip_cidr_range" {
   type = string
-  default = "10.1.0.0/26"
+  default = "10.1.0.0/28"
 }
 
 # module cloud run

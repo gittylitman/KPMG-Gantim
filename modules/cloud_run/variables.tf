@@ -18,10 +18,22 @@ variable "subnet_name" {
   type = string
 }
 
-variable "connector_max_instances" {
-  type = number
+variable "service_account_name" {
+  type = string
 }
 
 variable "connector_min_instances" {
   type = number
+}
+
+variable "connector_max_instances" {
+  type = number
+}
+
+variable "dataset_id" {
+  type = string
+}
+
+variable "role" {
+  type = string
 }

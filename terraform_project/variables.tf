@@ -57,7 +57,12 @@ variable "role_connect_big_query" {
   default = "bigquery.dataEditor"
 }
 
-variable "load_balancer_name" {
+variable "neg_name" {
+  type = list(string)
+  default = ["uploader", "metrics"]
+}
+
+variable "backend_service_name" {
   type = list(string)
   default = ["uploader", "metrics"]
 }

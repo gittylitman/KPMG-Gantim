@@ -43,8 +43,8 @@ module "cloud_run" {
 module "load_balancer" {
   source = "../modules/load_balancer"
   region = var.region
-  neg_name = "${var.project_name}-neg-${var.load_balancer_name[count.index]}-${var.environment}"
-  backend_service_name = "${var.project_name}-bsrv-${var.load_balancer_name[count.index]}-${var.environment}"
+  neg_name = "${var.project_name}-neg-${var.neg_name[count.index]}-${var.environment}"
+  backend_service_name = "${var.project_name}-bsrv-${var.backend_service_name[count.index]}-${var.environment}"
   vpc_name = module.network.network_name
   subnet_name = "${var.project_name}-snet-prxy-${var.environment}"
   lb_name = "${var.project_name}-ilb-${var.environment}"
@@ -57,7 +57,7 @@ module "load_balancer" {
   subnet_private_name = module.network.subnet_name
   cert_file = var.cert_file
   private_key_file = var.private_key_file
-  count = length(var.load_balancer_name)
+  count = length(var.neg_name)
   depends_on = [ module.cloud_run ]
 }
 

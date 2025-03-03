@@ -33,7 +33,7 @@ resource "google_cloud_run_v2_service" "cloud_run"{
     }
     service_account = google_service_account.cloudrun_service_account.email
   }
-  depends_on = [ google_bigquery_dataset_iam_member.bq_access ]
+  # depends_on = [ google_bigquery_dataset_iam_member.bq_access ]
 }
 
 # resource "google_bigquery_dataset_iam_member" "bq_access" {

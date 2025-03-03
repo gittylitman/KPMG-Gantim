@@ -43,12 +43,12 @@ module "cloud_run" {
 module "load_balancer" {
   source = "../modules/load_balancer"
   region = var.region
-  neg_name = "${var.project_name}-neg-${var.neg_name[count.index]}-${var.environment}"
-  backend_service_name = "${var.project_name}-bsrv-${var.backend_service_name[count.index]}-${var.environment}"
+  neg_name = ["${var.project_name}-neg-${var.neg_name[0]}-${var.environment}","${var.project_name}-neg-${var.neg_name[1]}-${var.environment}"]
+  backend_service_name =["${var.project_name}-bsrv-${var.backend_service_name[0]}-${var.environment}","${var.project_name}-bsrv-${var.backend_service_name[1]}-${var.environment}"] 
   vpc_name = module.network.network_name
   subnet_name = "${var.project_name}-snet-prxy-${var.environment}"
   lb_name = "${var.project_name}-ilb-${var.environment}"
-  cloud_run_names = "${var.project_name}-${var.cloud_run_names[count.index]}-${var.environment}"
+  cloud_run_names = ["${var.project_name}-${var.cloud_run_names[0]}-${var.environment}","${var.project_name}-${var.cloud_run_names[1]}-${var.environment}"]
   certificate_name = "${var.project_name}-cert-${var.environment}"
   http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
   https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"
@@ -57,7 +57,6 @@ module "load_balancer" {
   subnet_private_name = module.network.subnet_name
   cert_file = var.cert_file
   private_key_file = var.private_key_file
-  count = length(var.neg_name)
   depends_on = [ module.cloud_run ]
 }
 

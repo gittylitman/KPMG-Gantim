@@ -34,7 +34,7 @@ variable "cloud_run_names" {
 
 variable "container_image" {
   type = list(string)
-  default = ["me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/uploader:latest", "me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/metrics:latest"]
+  default = ["us-docker.pkg.dev/cloudrun/container/hello","us-docker.pkg.dev/cloudrun/container/hello"]
 }
 
 variable "access_connector_names" {

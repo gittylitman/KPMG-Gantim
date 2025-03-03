@@ -34,7 +34,7 @@ variable "cloud_run_names" {
 
 variable "container_image" {
   type = list(string)
-  default = ["us-docker.pkg.dev/cloudrun/container/hello","us-docker.pkg.dev/cloudrun/container/hello"]
+  default = ["container image","container image"]
 }
 
 variable "access_connector_names" {
@@ -74,12 +74,12 @@ variable "proxy_subnet_range" {
 
 variable "cert_file" {
   type = string
-  default = "./certificate.pem"
+  default = "path to file"
 }
 
 variable "private_key_file" {
   type = string
-  default = "./private_key.pem"
+  default = "path to file"
 }
 
 # module vm instance

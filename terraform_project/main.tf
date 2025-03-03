@@ -19,7 +19,7 @@ module "network" {
 
 module "bigquery" {
   source = "../modules/bigquery"
-  dataset_id = "${var.project_name}_bgquery_${var.environment}"
+  dataset_id = "nec_gnt_bgquery_${var.environment}"
   location = var.region
   tables = var.tables
 }

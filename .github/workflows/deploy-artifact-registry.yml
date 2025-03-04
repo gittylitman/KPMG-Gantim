@@ -9,7 +9,7 @@ permissions:
   packages: write
 
 env:
-  IMAGE: /kpmg-gantim-452112/gantim-repo
+  IMAGE: /kpmg-gantim-452112/gantim-repo/gantimbuild
   PROJECT: me-west1-docker.pkg.dev
 
 jobs:

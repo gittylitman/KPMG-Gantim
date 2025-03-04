@@ -117,3 +117,13 @@ variable "tables" {
     }
   ]
 }
+
+variable "location" {
+  default = "ASIA"
+  type = string
+}
+
+variable "document_name"{
+  type = string
+  default = "document-binom"
+}

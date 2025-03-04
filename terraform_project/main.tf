@@ -9,11 +9,10 @@ provider "google" {
   project = var.project_id
 }
 
-module "network" {
-  source = "../modules/network"
-  vpc_name = "${var.environment}-binom"
-  subnetwork_name = "${var.project_name}-snet-${var.environment}-binom"
-  region = var.region
-  ip_cidr_range = var.ip_cidr_range
+
+module "document"{
+  source = "../modules/document_AI"
+  location = var.location
+  name = var.document_name
 }
 

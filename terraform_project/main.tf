@@ -13,6 +13,6 @@ provider "google" {
 
 module "document"{
   source = "../modules/document_AI"
-  location = "EU"
+  location = "eu"
   name = var.document_name
 }

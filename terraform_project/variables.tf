@@ -1,6 +1,6 @@
 variable "project_id" {
   type = string
-  default = "my-project-document-ai-452807"
+  default = "kpmg-gantim-452112"
 }
 
 variable "project_name" {

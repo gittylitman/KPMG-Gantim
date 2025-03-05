@@ -7,12 +7,12 @@ terraform {
 
 provider "google" {
   project = var.project_id
+  region  = "us-central1"
 }
 
 
 module "document"{
   source = "../modules/document_AI"
-  location = "US"
+  location = "us-central1"
   name = var.document_name
 }
-

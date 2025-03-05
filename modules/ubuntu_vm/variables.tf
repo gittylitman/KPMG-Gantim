@@ -25,5 +25,5 @@ variable "machine_type" {
 
 variable "image" {
   type = string
-  default = "ubuntu-os-cloud/ubuntu-2004-lts"
+  default = "ubuntu-2004-focal-v20250213"
 }

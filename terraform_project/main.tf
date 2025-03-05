@@ -42,7 +42,6 @@ module "cloud_run" {
 
 module "public_cloud_run" {
   source = "../modules/public_cloud_run"
-
   public_vpc_access_connector_name = "${var.project_name}-${var.public_vpc_access_connector_name}-${var.environment}"
   location = var.region
   subnet_name = module.network.subnet_name

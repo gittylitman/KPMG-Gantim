@@ -132,5 +132,5 @@ variable "public_cloud_run_name" {
 
 variable "public_container_image" {
   type = string
-  default = "us-docker.pkg.dev/cloudrun/container/hello"
+  default = "me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest"
 }

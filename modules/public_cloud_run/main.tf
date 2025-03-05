@@ -17,6 +17,9 @@ resource "google_cloud_run_v2_service" "puclic_cloudrun" {
 
   template {
     containers {
+      ports {
+        container_port = 80
+      }
       image = var.public_container_image
     }
 

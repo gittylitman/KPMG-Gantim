@@ -48,7 +48,7 @@ module "public_cloud_run" {
   subnet_name = module.network.subnet_name
   connector_min_instances = var.connector_min_instances
   connector_max_instances = var.connector_max_instances
-  public_cloud_run_name = var.public_cloud_run_name
+  public_cloud_run_name =  "${var.project_name}-${var.public_cloud_run_name}-${var.environment}"
   public_container_image = var.public_container_image
 }
 

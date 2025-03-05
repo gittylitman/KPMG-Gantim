@@ -1,4 +1,3 @@
-
 resource "google_vpc_access_connector" "connector" {
   name = var.public_vpc_access_connector_name
   region = var.location
@@ -9,7 +8,7 @@ resource "google_vpc_access_connector" "connector" {
   max_instances = var.connector_max_instances
 }
 
-resource "google_cloud_run_v2_service" "puclic_cloudrun" {
+resource "google_cloud_run_v2_service" "public_cloudrun" {
   name     = var.public_cloud_run_name
   location = var.location
   ingress = "INGRESS_TRAFFIC_ALL"
@@ -31,8 +30,8 @@ resource "google_cloud_run_v2_service" "puclic_cloudrun" {
 }
 
 resource "google_cloud_run_service_iam_member" "public_access" {
-  service  = google_cloud_run_v2_service.puclic_cloudrun.name
-  location = google_cloud_run_v2_service.puclic_cloudrun.location
+  service  = google_cloud_run_v2_service.public_cloudrun.name
+  location = google_cloud_run_v2_service.public_cloudrun.location
   role     = "roles/run.invoker"
   member   = "allUsers"
 }

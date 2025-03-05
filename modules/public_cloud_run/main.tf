@@ -27,4 +27,9 @@ resource "google_cloud_run_v2_service" "puclic_cloudrun" {
   }
 }
 
-
+resource "google_cloud_run_service_iam_member" "public_access" {
+  service  = google_cloud_run_v2_service.puclic_cloudrun.name
+  location = google_cloud_run_v2_service.puclic_cloudrun.location
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}

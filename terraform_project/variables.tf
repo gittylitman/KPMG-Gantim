@@ -34,7 +34,7 @@ variable "cloud_run_names" {
 
 variable "container_image" {
   type = list(string)
-  default = ["container image","container image"]
+  default = ["us-docker.pkg.dev/cloudrun/container/hello","us-docker.pkg.dev/cloudrun/container/hello"]
 }
 
 variable "access_connector_names" {
@@ -74,12 +74,12 @@ variable "proxy_subnet_range" {
 
 variable "cert_file" {
   type = string
-  default = "path to file"
+  default = "./certificate.pem"
 }
 
 variable "private_key_file" {
   type = string
-  default = "path to file"
+  default = "./private_key.pem"
 }
 
 # module vm instance
@@ -116,4 +116,21 @@ variable "tables" {
       ]
     }
   ]
+}
+
+# module public cloud run
+
+variable "public_vpc_access_connector_name" {
+  type = string
+  default = "vpc-infra"
+}
+
+variable "public_cloud_run_name" {
+  type = string
+  default = "crun-infra"
+}
+
+variable "public_container_image" {
+  type = string
+  default = "me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest"
 }

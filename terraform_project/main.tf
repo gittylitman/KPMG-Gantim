@@ -40,6 +40,18 @@ module "cloud_run" {
   depends_on = [ module.bigquery ]
 }
 
+module "public_cloud_run" {
+  source = "../modules/public_cloud_run"
+
+  public_vpc_access_connector_name = "${var.project_name}-${var.public_vpc_access_connector_name}-${var.environment}"
+  location = var.region
+  subnet_name = module.network.subnet_name
+  connector_min_instances = var.connector_min_instances
+  connector_max_instances = var.connector_max_instances
+  public_cloud_run_name =  "${var.project_name}-${var.public_cloud_run_name}-${var.environment}"
+  public_container_image = var.public_container_image
+}
+
 module "load_balancer" {
   source = "../modules/load_balancer"
   region = var.region

@@ -127,3 +127,13 @@ variable "document_name"{
   type = string
   default = "document-binom"
 }
+
+variable "processor_location" {
+  type = string
+  default = "eu"
+}
+
+variable "processor_type" {
+  type = string
+  default = "OCR_PROCESSOR"
+}

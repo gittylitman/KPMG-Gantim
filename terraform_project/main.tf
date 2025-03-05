@@ -12,6 +12,7 @@ provider "google" {
 
 module "document"{
   source = "../modules/document_AI"
-  location = "eu"
+  location = var.processor_location
   name = var.document_name
+  type = var.processor_type
 }

@@ -42,13 +42,13 @@ module "cloud_run" {
 
 module "front_cloud_run" {
   source = "../modules/front_cloud_run"
-  public_vpc_access_connector_name = "${var.project_name}-${var.public_vpc_access_connector_name}-${var.environment}"
+  front_vpc_access_connector_name = "${var.project_name}-${var.front_vpc_access_connector_name}-${var.environment}"
   location = var.region
   subnet_name = module.network.subnet_name
   connector_min_instances = var.connector_min_instances
   connector_max_instances = var.connector_max_instances
-  public_cloud_run_name =  "${var.project_name}-${var.public_cloud_run_name}-${var.environment}"
-  public_container_image = var.public_container_image
+  front_cloud_run_name =  "${var.project_name}-${var.front_cloud_run_name}-${var.environment}"
+  front_container_image = var.front_container_image
 }
 
 module "load_balancer" {
@@ -59,7 +59,7 @@ module "load_balancer" {
   vpc_name = module.network.network_name
   subnet_name = "${var.project_name}-snet-prxy-${var.environment}"
   lb_name = "${var.project_name}-ilb-${var.environment}"
-  cloud_run_name = "${var.project_name}-${var.public_cloud_run_name}-${var.environment}"
+  cloud_run_name = "${var.project_name}-${var.front_cloud_run_name}-${var.environment}"
   certificate_name = "${var.project_name}-cert-${var.environment}"
   http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
   https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"

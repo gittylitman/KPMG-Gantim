@@ -113,17 +113,17 @@ variable "tables" {
 
 # module front cloud run
 
-variable "public_vpc_access_connector_name" {
+variable "front_vpc_access_connector_name" {
   type = string
   default = "vpc-infra"
 }
 
-variable "public_cloud_run_name" {
+variable "front_cloud_run_name" {
   type = string
   default = "crun-infra"
 }
 
-variable "public_container_image" {
+variable "front_container_image" {
   type = string
   default = "me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest"
 }

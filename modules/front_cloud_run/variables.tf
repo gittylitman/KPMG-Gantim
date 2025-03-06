@@ -1,4 +1,4 @@
-variable "public_vpc_access_connector_name" {
+variable "front_vpc_access_connector_name" {
   type = string
 }
 
@@ -18,10 +18,10 @@ variable "connector_max_instances" {
   type = string
 }
 
-variable "public_cloud_run_name" {
+variable "front_cloud_run_name" {
   type = string
 }
 
-variable "public_container_image" {
+variable "front_container_image" {
   type = string
 }

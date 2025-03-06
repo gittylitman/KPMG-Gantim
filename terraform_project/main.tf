@@ -79,10 +79,3 @@ module "ubuntu_vm_instance" {
   network_name = module.network.network_name
   subnetwork_name = module.network.subnet_name
 }
-
-module "cloud_storage" {
-  source = "../modules/cloud_storage"
-  name = "${var.project_name}-gcs-${var.cloud_storage_name[count.index]}-${var.environment}"
-  location = var.region
-  count = length(var.cloud_storage_name)
-}

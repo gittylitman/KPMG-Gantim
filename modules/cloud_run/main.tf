@@ -23,10 +23,15 @@ resource "google_cloud_run_v2_service" "cloud_run"{
   location = var.location
   ingress = "INGRESS_TRAFFIC_INTERNAL_ONLY"
   deletion_protection = false
+
   template {
     containers {
+    ports {
+        container_port = 80
+      }
       image = var.container_image
     }
+
     vpc_access {
       connector = google_vpc_access_connector.connector.id
       egress = "ALL_TRAFFIC"

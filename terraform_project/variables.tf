@@ -58,13 +58,13 @@ variable "role_connect_big_query" {
 }
 
 variable "neg_name" {
-  type = list(string)
-  default = ["uploader", "metrics"]
+  type = string
+  default = "infra"
 }
 
 variable "backend_service_name" {
-  type = list(string)
-  default = ["uploader", "metrics"]
+  type = string
+  default = "infra"
 }
 
 variable "proxy_subnet_range" {
@@ -89,13 +89,6 @@ variable "zone_part" {
   default = "a"
 }
 
-# module cloud storage
-
-variable "cloud_storage_name" {
-  type = list(string)
-  default = ["uploader", "metrics"]
-}
-
 # module bigquery
 
 variable "tables" {
@@ -118,7 +111,7 @@ variable "tables" {
   ]
 }
 
-# module public cloud run
+# module front cloud run
 
 variable "public_vpc_access_connector_name" {
   type = string

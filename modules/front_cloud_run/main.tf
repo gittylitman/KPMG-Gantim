@@ -11,7 +11,7 @@ resource "google_vpc_access_connector" "connector" {
 resource "google_cloud_run_v2_service" "public_cloudrun" {
   name     = var.public_cloud_run_name
   location = var.location
-  ingress = "INGRESS_TRAFFIC_ALL"
+  ingress = "INGRESS_TRAFFIC_INTERNAL_ONLY"
   deletion_protection = false
 
   template {
@@ -29,9 +29,3 @@ resource "google_cloud_run_v2_service" "public_cloudrun" {
   }
 }
 
-resource "google_cloud_run_service_iam_member" "public_access" {
-  service  = google_cloud_run_v2_service.public_cloudrun.name
-  location = google_cloud_run_v2_service.public_cloudrun.location
-  role     = "roles/run.invoker"
-  member   = "allUsers"
-}

@@ -1,29 +1,27 @@
 resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
-  name                  = var.neg_name[count.index]
+  name                  = var.neg_name
   region                = var.region
   network_endpoint_type = "SERVERLESS"
   cloud_run {
-    service = var.cloud_run_names[count.index]
+    service = var.cloud_run_name
   }
-  count = length(var.neg_name)
 }
 
 resource "google_compute_region_backend_service" "backend_service" {
-  name                  = var.backend_service_name[count.index]
+  name                  = var.backend_service_name
   region                = var.region
   protocol              = "HTTPS"
   load_balancing_scheme = "INTERNAL_MANAGED"
   backend {
-    group = google_compute_region_network_endpoint_group.cloud_run_neg[count.index].id
+    group = google_compute_region_network_endpoint_group.cloud_run_neg.id
   }
-  count = length(var.backend_service_name)
 }
 
 resource "google_compute_region_url_map" "url_map" {
   name   = var.lb_name
   region = var.region
 
-  default_service = google_compute_region_backend_service.backend_service[1].id 
+  default_service = google_compute_region_backend_service.backend_service.id 
 
   host_rule {
     hosts        = ["*"]
@@ -33,11 +31,11 @@ resource "google_compute_region_url_map" "url_map" {
   path_matcher {
     name = "path-matcher-1"
 
-    default_service = google_compute_region_backend_service.backend_service[1].id
+    default_service = google_compute_region_backend_service.backend_service.id
 
     path_rule {
-      paths   = ["/admin"]
-      service = google_compute_region_backend_service.backend_service[0].id
+      paths   = ["/upload"]
+      service = google_compute_region_backend_service.backend_service.id
     }
   }
 }

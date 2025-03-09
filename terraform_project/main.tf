@@ -42,24 +42,25 @@ module "cloud_run" {
 
 module "front_cloud_run" {
   source = "../modules/front_cloud_run"
-  front_vpc_access_connector_name = "${var.project_name}-${var.front_vpc_access_connector_name}-${var.environment}"
+  front_vpc_access_connector_name = "${var.project_name}-${var.front_vpc_access_connector_name[count.index]}-${var.environment}"
   location = var.region
   subnet_name = module.network.subnet_name
   connector_min_instances = var.connector_min_instances
   connector_max_instances = var.connector_max_instances
-  front_cloud_run_name =  "${var.project_name}-${var.front_cloud_run_name}-${var.environment}"
-  front_container_image = var.front_container_image
+  front_cloud_run_name =  "${var.project_name}-${var.front_cloud_run_name[count.index]}-${var.environment}"
+  front_container_image = var.front_container_image[count.index]
+  count = length(var.front_cloud_run_name)
 }
 
 module "load_balancer" {
   source = "../modules/load_balancer"
   region = var.region
-  neg_name = "${var.project_name}-neg-${var.neg_name}-${var.environment}"
-  backend_service_name ="${var.project_name}-bsrv-${var.backend_service_name}-${var.environment}"
+  neg_name = ["${var.project_name}-neg-${var.neg_name[0]}-${var.environment}","${var.project_name}-neg-${var.neg_name[1]}-${var.environment}"]
+  backend_service_name =["${var.project_name}-bsrv-${var.backend_service_name[0]}-${var.environment}","${var.project_name}-bsrv-${var.backend_service_name[1]}-${var.environment}"]
   vpc_name = module.network.network_name
   subnet_name = "${var.project_name}-snet-prxy-${var.environment}"
   lb_name = "${var.project_name}-ilb-${var.environment}"
-  cloud_run_name = "${var.project_name}-${var.front_cloud_run_name}-${var.environment}"
+  cloud_run_name = ["${var.project_name}-${var.front_cloud_run_name[0]}-${var.environment}","${var.project_name}-${var.front_cloud_run_name[1]}-${var.environment}"]
   certificate_name = "${var.project_name}-cert-${var.environment}"
   http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
   https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"

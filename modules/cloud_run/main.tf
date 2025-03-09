@@ -26,10 +26,10 @@ resource "google_cloud_run_v2_service" "cloud_run"{
 
   template {
     containers {
-    ports {
+      ports {
         container_port = 80
-      }
-      image = var.container_image
+       }
+       image = var.container_image
     }
 
     vpc_access {

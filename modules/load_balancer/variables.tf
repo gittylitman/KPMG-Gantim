@@ -23,7 +23,7 @@ variable "lb_name" {
 }
 
 variable "cloud_run_name" {
-  type = string
+  type = list(string)
 } 
 
 variable "certificate_name" {

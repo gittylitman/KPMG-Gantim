@@ -3,11 +3,11 @@ variable "region" {
 }
 
 variable "neg_name" {
-  type = string
+  type = list(string)
 }
 
 variable "backend_service_name" {
-  type = string
+  type = list(string)
 }
 
 variable "vpc_name" {
@@ -23,7 +23,7 @@ variable "lb_name" {
 }
 
 variable "cloud_run_name" {
-  type = string
+  type = list(string)
 } 
 
 variable "certificate_name" {

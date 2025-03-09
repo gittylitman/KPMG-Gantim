@@ -58,13 +58,13 @@ variable "role_connect_big_query" {
 }
 
 variable "neg_name" {
-  type = string
-  default = "infra"
+  type = list(string)
+  default = ["admin","metric"]
 }
 
 variable "backend_service_name" {
-  type = string
-  default = "infra"
+  type = list(string)
+  default = ["admin","metric"]
 }
 
 variable "proxy_subnet_range" {
@@ -113,17 +113,18 @@ variable "tables" {
 
 # module front cloud run
 
+
 variable "front_vpc_access_connector_name" {
-  type = string
-  default = "vpc-infra"
+  type = list(string)
+  default = [ "vpc-fuploader", "vpc-fmetrics" ]
 }
 
 variable "front_cloud_run_name" {
-  type = string
-  default = "crun-infra"
+  type = list(string)
+  default = ["crun-front-uploader", "crun-front-metrics"]
 }
 
 variable "front_container_image" {
-  type = string
-  default = "me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest"
+  type = list(string)
+  default = ["me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest","me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest"]
 }

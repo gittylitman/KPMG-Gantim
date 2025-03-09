@@ -121,7 +121,7 @@ variable "front_vpc_access_connector_name" {
 
 variable "front_cloud_run_name" {
   type = list(string)
-  default = ["crun-front-uploader", "crun-front-metrics"]
+  default = ["crun-frontuploader", "crun-frontmetrics"]
 }
 
 variable "front_container_image" {

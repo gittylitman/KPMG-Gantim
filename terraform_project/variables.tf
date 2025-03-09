@@ -116,12 +116,12 @@ variable "tables" {
 
 variable "front_vpc_access_connector_name" {
   type = list(string)
-  default = [ "vpc-front-uploader", "vpc-front-metrics" ]
+  default = [ "vpc-fuploader", "vpc-fmetrics" ]
 }
 
 variable "front_cloud_run_name" {
   type = list(string)
-  default = ["crun-frontuploader", "crun-frontmetrics"]
+  default = ["crun-front-uploader", "crun-front-metrics"]
 }
 
 variable "front_container_image" {

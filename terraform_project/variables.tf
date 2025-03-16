@@ -25,6 +25,28 @@ variable "ip_cidr_range" {
   default = "100.69.3.0/28"
 }
 
+# module bigquery
+
+variable "tables" {
+  type = list(object({
+    table_name = string
+    columns     = list(object({
+      name   = string
+      type   = string
+      mode   = string
+    }))
+  }))
+  default = [
+    {
+      table_name = "table1"
+      columns = [
+        { name = "columnA", type = "STRING", mode = "NULLABLE" },
+        { name = "columnB", type = "STRING", mode = "NULLABLE" }
+      ]
+    }
+  ]
+}
+
 # module cloud run
 
 variable "cloud_run_names" {
@@ -89,30 +111,8 @@ variable "zone_part" {
   default = "a"
 }
 
-# module bigquery
-
-variable "tables" {
-  type = list(object({
-    table_name = string
-    columns     = list(object({
-      name   = string
-      type   = string
-      mode   = string
-    }))
-  }))
-  default = [
-    {
-      table_name = "table1"
-      columns = [
-        { name = "columnA", type = "STRING", mode = "NULLABLE" },
-        { name = "columnB", type = "STRING", mode = "NULLABLE" }
-      ]
-    }
-  ]
-}
 
 # module front cloud run
-
 
 variable "front_vpc_access_connector_name" {
   type = list(string)

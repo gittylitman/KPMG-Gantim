@@ -79,6 +79,25 @@ variable "role_connect_big_query" {
   default = "bigquery.dataEditor"
 }
 
+# module front cloud run
+
+variable "front_vpc_access_connector_name" {
+  type = list(string)
+  default = [ "vpc-fuploader", "vpc-fmetrics" ]
+}
+
+variable "front_cloud_run_name" {
+  type = list(string)
+  default = ["crun-front-uploader", "crun-front-metrics"]
+}
+
+variable "front_container_image" {
+  type = list(string)
+  default = ["me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest","me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest"]
+}
+
+# module load balancer
+
 variable "neg_name" {
   type = list(string)
   default = ["admin","metric"]
@@ -109,22 +128,4 @@ variable "private_key_file" {
 variable "zone_part" {
   type = string
   default = "a"
-}
-
-
-# module front cloud run
-
-variable "front_vpc_access_connector_name" {
-  type = list(string)
-  default = [ "vpc-fuploader", "vpc-fmetrics" ]
-}
-
-variable "front_cloud_run_name" {
-  type = list(string)
-  default = ["crun-front-uploader", "crun-front-metrics"]
-}
-
-variable "front_container_image" {
-  type = list(string)
-  default = ["me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest","me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest"]
 }

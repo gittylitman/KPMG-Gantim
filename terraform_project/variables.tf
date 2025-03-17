@@ -1,6 +1,5 @@
 variable "project_id" {
   type = string
-  default = "kpmg-gantim-452112"
 }
 
 variable "project_name" {
@@ -25,70 +24,6 @@ variable "ip_cidr_range" {
   default = "100.69.3.0/28"
 }
 
-# module cloud run
-
-variable "cloud_run_names" {
-  type = list(string)
-  default = ["crun-uploader", "crun-metrics"]
-}
-
-variable "container_image" {
-  type = list(string)
-  default = ["us-docker.pkg.dev/cloudrun/container/hello","us-docker.pkg.dev/cloudrun/container/hello"]
-}
-
-variable "access_connector_names" {
-  type = list(string)
-  default = [ "vpc-uploader", "vpc-metrics" ]
-}
-
-variable "connector_min_instances" {
-  type = number
-  default = 2
-}
-
-variable "connector_max_instances" {
-  type = number
-  default = 4
-}
-
-variable "role_connect_big_query" {
-  type = string
-  default = "bigquery.dataEditor"
-}
-
-variable "neg_name" {
-  type = list(string)
-  default = ["admin","metric"]
-}
-
-variable "backend_service_name" {
-  type = list(string)
-  default = ["admin","metric"]
-}
-
-variable "proxy_subnet_range" {
-  type = string
-  default = "100.69.4.0/26"
-}
-
-variable "cert_file" {
-  type = string
-  default = "./certificate.pem"
-}
-
-variable "private_key_file" {
-  type = string
-  default = "./private_key.pem"
-}
-
-# module vm instance
-
-variable "zone_part" {
-  type = string
-  default = "a"
-}
-
 # module bigquery
 
 variable "tables" {
@@ -111,8 +46,38 @@ variable "tables" {
   ]
 }
 
-# module front cloud run
+# module cloud run
 
+variable "cloud_run_names" {
+  type = list(string)
+  default = ["crun-uploader", "crun-metrics"]
+}
+
+variable "container_image" {
+  type = list(string)
+}
+
+variable "access_connector_names" {
+  type = list(string)
+  default = [ "vpc-uploader", "vpc-metrics" ]
+}
+
+variable "connector_min_instances" {
+  type = number
+  default = 2
+}
+
+variable "connector_max_instances" {
+  type = number
+  default = 4
+}
+
+variable "role_connect_big_query" {
+  type = string
+  default = "bigquery.dataEditor"
+}
+
+# module front cloud run
 
 variable "front_vpc_access_connector_name" {
   type = list(string)
@@ -126,5 +91,36 @@ variable "front_cloud_run_name" {
 
 variable "front_container_image" {
   type = list(string)
-  default = ["me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest","me-west1-docker.pkg.dev/kpmg-gantim-452112/gantim-repo/gantim-app:latest"]
+}
+
+# module load balancer
+
+variable "neg_name" {
+  type = list(string)
+  default = ["admin","metric"]
+}
+
+variable "backend_service_name" {
+  type = list(string)
+  default = ["admin","metric"]
+}
+
+variable "proxy_subnet_range" {
+  type = string
+  default = "100.69.4.0/26"
+}
+
+variable "cert_file" {
+  type = string
+}
+
+variable "private_key_file" {
+  type = string
+}
+
+# module vm instance
+
+variable "zone_part" {
+  type = string
+  default = "a"
 }

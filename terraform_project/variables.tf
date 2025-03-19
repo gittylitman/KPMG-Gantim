@@ -121,11 +121,7 @@ variable "subnet_proxy_name" {
   type = string
 }
 
-variable "cert_file" {
-  type = string
-}
-
-variable "private_key_file" {
+variable "certificate_name" {
   type = string
 }
 

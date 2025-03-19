@@ -46,14 +46,6 @@ variable "subnet_private_name" {
   type = string
 }
 
-variable "cert_file" {
-  type = string
-}
-
-variable "private_key_file" {
-  type = string
-}
-
 variable "host_project_id" {
   type = string
 }

@@ -3,7 +3,11 @@ output "network_name" {
 }
 
 output "subnet_name" {
-  value = google_compute_subnetwork.subnetwork[0].name
+  value = data.google_compute_subnetwork.subnetwork[0].name
+}
+
+output "subnet_bigquery_name" {
+  value = data.google_compute_subnetwork.subnetwork[1].name
 }
 
 output "network_id" {

@@ -42,10 +42,6 @@ variable "network_id" {
   type = string
 }
 
-variable "ip_range" {
-  type = string
-}
-
 variable "subnet_private_name" {
   type = string
 }

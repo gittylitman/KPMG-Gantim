@@ -23,14 +23,17 @@ variable "vpc_name" {
   default = "dev"
 }
 
+variable "subnet_cloud_run_name" {
+  type = string
+}
+
+variable "subnet_bigquery_name" {
+  type = string
+}
+
 variable "region" {
   type = string
   default = "me-west1"
-}
-
-variable "ip_cidr_range" {
-  type = list(string)
-  default = ["100.69.3.0/28", "100.69.4.0/28"]
 }
 
 # module bigquery
@@ -114,9 +117,8 @@ variable "backend_service_name" {
   default = ["admin","metric"]
 }
 
-variable "proxy_subnet_range" {
+variable "subnet_proxy_name" {
   type = string
-  default = "100.69.5.0/26"
 }
 
 variable "cert_file" {

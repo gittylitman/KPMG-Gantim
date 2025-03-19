@@ -11,11 +11,10 @@ provider "google" {
 
 module "network" {
   source = "../modules/network"
-  vpc_name = var.vpc_name
-  subnetwork_name = ["${var.project_name}-snet-${var.environment}", "${var.project_name}-snet2-${var.environment}"]
-  region = var.region
-  ip_cidr_range = var.ip_cidr_range
   host_project_id = var.host_project_id
+  vpc_name = var.vpc_name
+  subnetwork_names = [var.subnet_cloud_run_name, var.subnet_bigquery_name]
+  region = var.region
 }
 
 module "bigquery" {
@@ -59,14 +58,13 @@ module "load_balancer" {
   neg_name = ["${var.project_name}-neg-${var.neg_name[0]}-${var.environment}","${var.project_name}-neg-${var.neg_name[1]}-${var.environment}"]
   backend_service_name =["${var.project_name}-bsrv-${var.backend_service_name[0]}-${var.environment}","${var.project_name}-bsrv-${var.backend_service_name[1]}-${var.environment}"]
   vpc_name = module.network.network_name
-  subnet_name = "${var.project_name}-snet-prxy-${var.environment}"
+  subnet_name = var.subnet_proxy_name
   lb_name = "${var.project_name}-ilb-${var.environment}"
   cloud_run_name = ["${var.project_name}-${var.front_cloud_run_name[0]}-${var.environment}","${var.project_name}-${var.front_cloud_run_name[1]}-${var.environment}"]
   certificate_name = "${var.project_name}-cert-${var.environment}"
   http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
   https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"
   network_id = module.network.network_id
-  ip_range = var.proxy_subnet_range
   subnet_private_name = module.network.subnet_name
   cert_file = var.cert_file
   private_key_file = var.private_key_file

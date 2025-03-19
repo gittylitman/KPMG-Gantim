@@ -20,8 +20,8 @@ variable "region" {
 }
 
 variable "ip_cidr_range" {
-  type = string
-  default = "100.69.3.0/28"
+  type = list(string)
+  default = ["100.69.3.0/28", "100.69.4.0/28"]
 }
 
 # module bigquery

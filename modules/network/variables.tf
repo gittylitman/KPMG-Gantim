@@ -5,7 +5,7 @@ variable "vpc_name" {
 
 variable "subnetwork_name" {
   description = "Value of the subnetwork name"
-  type = string
+  type = list(string)
 }
 
 variable "region" {
@@ -15,5 +15,5 @@ variable "region" {
 
 variable "ip_cidr_range" {
   description = "subnet ip"
-  type        = string
+  type        = list(string)
 }

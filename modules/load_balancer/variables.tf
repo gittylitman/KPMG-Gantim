@@ -38,10 +38,6 @@ variable "https_forwarding_rule_name" {
   type = string
 }
 
-variable "network_id" {
-  type = string
-}
-
 variable "subnet_private_name" {
   type = string
 }

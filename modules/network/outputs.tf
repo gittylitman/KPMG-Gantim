@@ -3,7 +3,7 @@ output "network_name" {
 }
 
 output "subnet_name" {
-  value = google_compute_subnetwork.subnetwork.name
+  value = google_compute_subnetwork.subnetwork[0].name
 }
 
 output "network_id" {

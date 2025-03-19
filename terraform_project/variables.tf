@@ -115,7 +115,7 @@ variable "backend_service_name" {
 
 variable "proxy_subnet_range" {
   type = string
-  default = "100.69.4.0/26"
+  default = "100.69.5.0/26"
 }
 
 variable "cert_file" {

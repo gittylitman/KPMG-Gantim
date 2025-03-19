@@ -36,6 +36,8 @@ module "cloud_run" {
   connector_max_instances = var.connector_max_instances
   dataset_id = module.bigquery.dataset_id
   role = var.role_connect_big_query
+  network_name = module.network.network_name
+  subnetwork_name = module.network.subnet_name
   count = length(var.cloud_run_names)
   depends_on = [ module.bigquery ]
 }
@@ -49,6 +51,8 @@ module "front_cloud_run" {
   connector_max_instances = var.connector_max_instances
   front_cloud_run_name =  "${var.project_name}-${var.front_cloud_run_name[count.index]}-${var.environment}"
   front_container_image = var.front_container_image[count.index]
+  network_name = module.network.network_name
+  subnetwork_name = module.network.subnet_name
   count = length(var.front_cloud_run_name)
 }
 

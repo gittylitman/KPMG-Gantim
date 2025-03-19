@@ -1,5 +1,6 @@
 data "google_compute_network" "vpc_network" {
   name         = var.vpc_name
+  project = var.host_project_id
 }
 
 resource "google_compute_subnetwork" "subnetwork" {
@@ -10,4 +11,5 @@ resource "google_compute_subnetwork" "subnetwork" {
   private_ip_google_access = true
   purpose = "PRIVATE"
   count = length(var.subnetwork_name)
+  project = var.host_project_id
 }

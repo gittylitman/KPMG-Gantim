@@ -15,6 +15,7 @@ module "network" {
   subnetwork_name = ["${var.project_name}-snet-${var.environment}", "${var.project_name}-snet2-${var.environment}"]
   region = var.region
   ip_cidr_range = var.ip_cidr_range
+  host_project_id = var.host_project_id
 }
 
 module "bigquery" {
@@ -69,6 +70,7 @@ module "load_balancer" {
   subnet_private_name = module.network.subnet_name
   cert_file = var.cert_file
   private_key_file = var.private_key_file
+  host_project_id = var.host_project_id
   depends_on = [ module.front_cloud_run ]
 }
 

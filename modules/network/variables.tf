@@ -17,3 +17,7 @@ variable "ip_cidr_range" {
   description = "subnet ip"
   type        = list(string)
 }
+
+variable "host_project_id" {
+  type = string
+}

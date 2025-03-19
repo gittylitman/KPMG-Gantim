@@ -57,3 +57,7 @@ variable "cert_file" {
 variable "private_key_file" {
   type = string
 }
+
+variable "host_project_id" {
+  type = string
+}

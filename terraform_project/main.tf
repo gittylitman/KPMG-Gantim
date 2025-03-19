@@ -11,7 +11,7 @@ provider "google" {
 
 module "network" {
   source = "../modules/network"
-  vpc_name = "${var.environment}"
+  vpc_name = var.vpc_name
   subnetwork_name = ["${var.project_name}-snet-${var.environment}", "${var.project_name}-snet2-${var.environment}"]
   region = var.region
   ip_cidr_range = var.ip_cidr_range

@@ -14,6 +14,11 @@ variable "environment" {
 
 # module network
 
+variable "vpc_name" {
+  type = string
+  default = "dev"
+}
+
 variable "region" {
   type = string
   default = "me-west1"

@@ -17,7 +17,7 @@ variable "environment" {
 
 variable "vpc_name" {
   type = string
-  default = "dev"
+  default = "dev1"
 }
 
 variable "region" {

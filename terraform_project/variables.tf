@@ -2,6 +2,10 @@ variable "project_id" {
   type = string
 }
 
+variable "host_project_id" {
+  type = string
+}
+
 variable "project_name" {
   type = string
   default = "nec-gnt"
@@ -14,14 +18,22 @@ variable "environment" {
 
 # module network
 
+variable "vpc_name" {
+  type = string
+  default = "dev"
+}
+
+variable "subnet_cloud_run_name" {
+  type = string
+}
+
+variable "subnet_bigquery_name" {
+  type = string
+}
+
 variable "region" {
   type = string
   default = "me-west1"
-}
-
-variable "ip_cidr_range" {
-  type = string
-  default = "100.69.3.0/24"
 }
 
 # module bigquery
@@ -105,16 +117,11 @@ variable "backend_service_name" {
   default = ["admin","metric"]
 }
 
-variable "proxy_subnet_range" {
-  type = string
-  default = "100.69.4.0/26"
-}
-
-variable "cert_file" {
+variable "subnet_proxy_name" {
   type = string
 }
 
-variable "private_key_file" {
+variable "certificate_name" {
   type = string
 }
 

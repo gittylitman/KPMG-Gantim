@@ -38,22 +38,10 @@ variable "https_forwarding_rule_name" {
   type = string
 }
 
-variable "network_id" {
-  type = string
-}
-
-variable "ip_range" {
-  type = string
-}
-
 variable "subnet_private_name" {
   type = string
 }
 
-variable "cert_file" {
-  type = string
-}
-
-variable "private_key_file" {
+variable "host_project_id" {
   type = string
 }

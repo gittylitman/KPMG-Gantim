@@ -22,7 +22,7 @@ variable "region" {
 
 variable "ip_cidr_range" {
   type = string
-  default = "100.69.3.0/28"
+  default = "100.69.3.0/24"
 }
 
 # module bigquery

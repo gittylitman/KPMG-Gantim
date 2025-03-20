@@ -14,10 +14,6 @@ variable "vpc_access_connector_name" {
   type = string
 }
 
-variable "subnet_name" {
-  type = string
-}
-
 variable "service_account_name" {
   type = string
 }

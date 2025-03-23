@@ -9,17 +9,12 @@ provider "google" {
   project = var.project_id
 }
 
-module "enable_apis" {
-  source = "../modules/enable_apis"
-}
-
 module "network" {
   source = "../modules/network"
   host_project_id = var.host_project_id
   vpc_name = var.vpc_name
   subnetwork_names = [var.subnet_cloud_run_name, var.subnet_bigquery_name]
   region = var.region
-  depends_on = [ module.enable_apis ]
 }
 
 module "bigquery" {
@@ -27,7 +22,6 @@ module "bigquery" {
   dataset_id = "${replace(var.project_name, "-", "_")}_bgquery_${var.environment}"
   location = var.region
   tables = var.tables
-  depends_on = [ module.enable_apis ]
 }
 
 module "cloud_run" {

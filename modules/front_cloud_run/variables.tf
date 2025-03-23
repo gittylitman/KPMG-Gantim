@@ -6,10 +6,6 @@ variable "location" {
   type = string
 }
 
-variable "subnet_name" {
-  type = string
-}
-
 variable "connector_min_instances" {
   type = string
 }

@@ -1,9 +1,11 @@
 variable "project_id" {
   type = string
+  default = "gantim-enable"
 }
 
 variable "host_project_id" {
   type = string
+  default = "gantim-enable"
 }
 
 variable "project_name" {
@@ -13,22 +15,24 @@ variable "project_name" {
 
 variable "environment" {
   type = string
-  default = "dev"
+  default = "tst"
 }
 
 # module network
 
 variable "vpc_name" {
   type = string
-  default = "dev"
+  default = "test"
 }
 
 variable "subnet_cloud_run_name" {
   type = string
+  default = "snet-gantim-1"
 }
 
 variable "subnet_bigquery_name" {
   type = string
+  default = "snet-gantim-2"
 }
 
 variable "region" {
@@ -67,6 +71,7 @@ variable "cloud_run_names" {
 
 variable "container_image" {
   type = list(string)
+  default = [ "us-docker.pkg.dev/cloudrun/container/hello", "us-docker.pkg.dev/cloudrun/container/hello" ]
 }
 
 variable "access_connector_names" {
@@ -103,6 +108,7 @@ variable "front_cloud_run_name" {
 
 variable "front_container_image" {
   type = list(string)
+  default = [ "us-docker.pkg.dev/cloudrun/container/hello", "us-docker.pkg.dev/cloudrun/container/hello" ]
 }
 
 # module load balancer
@@ -119,10 +125,12 @@ variable "backend_service_name" {
 
 variable "subnet_proxy_name" {
   type = string
+  default = "snet-gantim-proxy"
 }
 
 variable "certificate_name" {
   type = string
+  default = "certificate"
 }
 
 # module vm instance

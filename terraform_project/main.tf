@@ -9,12 +9,18 @@ provider "google" {
   project = var.project_id
 }
 
+resource "google_project_service" "cloudresourcemanager" {
+  service            = "cloudresourcemanager.googleapis.com"
+  disable_on_destroy = false
+}
+
 module "network" {
   source = "../modules/network"
   host_project_id = var.host_project_id
   vpc_name = var.vpc_name
   subnetwork_names = [var.subnet_cloud_run_name, var.subnet_bigquery_name]
   region = var.region
+  depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
 module "bigquery" {
@@ -22,6 +28,7 @@ module "bigquery" {
   dataset_id = "${replace(var.project_name, "-", "_")}_bgquery_${var.environment}"
   location = var.region
   tables = var.tables
+  depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
 module "cloud_run" {

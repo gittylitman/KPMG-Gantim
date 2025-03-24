@@ -56,6 +56,7 @@ resource "google_compute_region_url_map" "url_map" {
 
 data "google_compute_region_ssl_certificate" "ssl_cert" {
   name        = var.certificate_name
+  region = var.region
 }
 
 data "google_compute_subnetwork" "proxy_subnet" {

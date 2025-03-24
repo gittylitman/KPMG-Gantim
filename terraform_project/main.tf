@@ -65,25 +65,25 @@ module "front_cloud_run" {
   depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
-module "load_balancer" {
-  source = "../modules/load_balancer"
-  region = var.region
-  neg_name = ["${var.project_name}-neg-${var.neg_name[0]}-${var.environment}","${var.project_name}-neg-${var.neg_name[1]}-${var.environment}"]
-  backend_service_name =["${var.project_name}-bsrv-${var.backend_service_name[0]}-${var.environment}","${var.project_name}-bsrv-${var.backend_service_name[1]}-${var.environment}"]
-  vpc_name = module.network.network_id
-  subnet_name = var.subnet_proxy_name
-  lb_name = "${var.project_name}-ilb-${var.environment}"
-  cloud_run_name = ["${var.project_name}-${var.front_cloud_run_name[0]}-${var.environment}","${var.project_name}-${var.front_cloud_run_name[1]}-${var.environment}"]
-  certificate_name = var.certificate_name
-  http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
-  https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"
-  subnet_private_name = module.network.subnet_id
-  host_project_id = var.host_project_id
-  depends_on = [ 
-    google_project_service.cloudresourcemanager,
-    module.front_cloud_run
-  ]
-}
+# module "load_balancer" {
+#   source = "../modules/load_balancer"
+#   region = var.region
+#   neg_name = ["${var.project_name}-neg-${var.neg_name[0]}-${var.environment}","${var.project_name}-neg-${var.neg_name[1]}-${var.environment}"]
+#   backend_service_name =["${var.project_name}-bsrv-${var.backend_service_name[0]}-${var.environment}","${var.project_name}-bsrv-${var.backend_service_name[1]}-${var.environment}"]
+#   vpc_name = module.network.network_id
+#   subnet_name = var.subnet_proxy_name
+#   lb_name = "${var.project_name}-ilb-${var.environment}"
+#   cloud_run_name = ["${var.project_name}-${var.front_cloud_run_name[0]}-${var.environment}","${var.project_name}-${var.front_cloud_run_name[1]}-${var.environment}"]
+#   certificate_name = var.certificate_name
+#   http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
+#   https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"
+#   subnet_private_name = module.network.subnet_id
+#   host_project_id = var.host_project_id
+#   depends_on = [ 
+#     google_project_service.cloudresourcemanager,
+#     module.front_cloud_run
+#   ]
+# }
 
 module "ubuntu_vm_instance" {
   source = "../modules/ubuntu_vm"

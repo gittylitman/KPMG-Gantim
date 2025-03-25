@@ -1,9 +1,11 @@
 variable "project_id" {
   type = string
+  default = "gantt-service-project"
 }
 
 variable "host_project_id" {
   type = string
+  default = "gantt-host-project"
 }
 
 variable "project_name" {
@@ -25,10 +27,12 @@ variable "vpc_name" {
 
 variable "subnet_cloud_run_name" {
   type = string
+  default = "nec-gnt-snet-dev"
 }
 
 variable "subnet_bigquery_name" {
   type = string
+  default = "nec-gnt-snet-bgquery-dev"
 }
 
 variable "region" {
@@ -67,6 +71,7 @@ variable "cloud_run_names" {
 
 variable "container_image" {
   type = list(string)
+  default = [ "us-docker.pkg.dev/cloudrun/container/hello", "us-docker.pkg.dev/cloudrun/container/hello" ]
 }
 
 variable "access_connector_names" {
@@ -103,6 +108,7 @@ variable "front_cloud_run_name" {
 
 variable "front_container_image" {
   type = list(string)
+  default = [ "us-docker.pkg.dev/cloudrun/container/hello", "us-docker.pkg.dev/cloudrun/container/hello" ]
 }
 
 # module load balancer
@@ -119,10 +125,12 @@ variable "backend_service_name" {
 
 variable "subnet_proxy_name" {
   type = string
+  default = "dev-proxy-only-0"
 }
 
 variable "certificate_name" {
   type = string
+  default = "dev-infra2025"
 }
 
 # module vm instance

@@ -54,10 +54,10 @@
 #   }
 # }
 
-data "google_compute_region_ssl_certificate" "ssl_cert" {
-  name        = var.certificate_name
-  region = var.region
-}
+# data "google_compute_region_ssl_certificate" "ssl_cert" {
+#   name        = var.certificate_name
+#   region = var.region
+# }
 
 # data "google_compute_subnetwork" "proxy_subnet" {
 #   name          = var.subnet_name

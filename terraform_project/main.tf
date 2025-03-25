@@ -14,14 +14,14 @@ resource "google_project_service" "cloudresourcemanager" {
   disable_on_destroy = false
 }
 
-module "network" {
-  source = "../modules/network"
-  host_project_id = var.host_project_id
-  vpc_name = var.vpc_name
-  subnetwork_names = [var.subnet_cloud_run_name, var.subnet_bigquery_name]
-  region = var.region
-  depends_on = [ google_project_service.cloudresourcemanager ]
-}
+# module "network" {
+#   source = "../modules/network"
+#   host_project_id = var.host_project_id
+#   vpc_name = var.vpc_name
+#   subnetwork_names = [var.subnet_cloud_run_name, var.subnet_bigquery_name]
+#   region = var.region
+#   depends_on = [ google_project_service.cloudresourcemanager ]
+# }
 
 # module "bigquery" {
 #   source = "../modules/bigquery"
@@ -95,7 +95,7 @@ module "network" {
 #   depends_on = [ google_project_service.cloudresourcemanager ]
 # }
 
-data "google_compute_region_ssl_certificate" "ssl_cert" {
-  name        = var.certificate_name
-  region = var.region
-}
+# data "google_compute_region_ssl_certificate" "ssl_cert" {
+#   name        = var.certificate_name
+#   region = var.region
+# }

@@ -7,7 +7,6 @@ terraform {
 
 provider "google" {
   project = var.project_id
-  region = var.region
 }
 
 resource "google_project_service" "cloudresourcemanager" {
@@ -96,6 +95,6 @@ resource "google_project_service" "cloudresourcemanager" {
 #   depends_on = [ google_project_service.cloudresourcemanager ]
 # }
 
-data "google_compute_region_ssl_certificate" "ssl_cert" {
+data "google_compute_ssl_certificate" "ssl_cert" {
   name        = var.certificate_name
 }

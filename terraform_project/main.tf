@@ -95,9 +95,6 @@ resource "google_project_service" "cloudresourcemanager" {
 #   depends_on = [ google_project_service.cloudresourcemanager ]
 # }
 
-resource "google_compute_region_ssl_certificate" "ssl_cert" {
+data "google_compute_region_ssl_certificate" "ssl_cert" {
   name        = var.certificate_name
-  region = var.region
-  certificate = file("../certificate.pem")
-  private_key = file("../private_key.pem")
 }

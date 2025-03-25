@@ -130,7 +130,7 @@ variable "subnet_proxy_name" {
 
 variable "certificate_name" {
   type = string
-  default = "certificate"
+  default = "certificate2"
 }
 
 # module vm instance

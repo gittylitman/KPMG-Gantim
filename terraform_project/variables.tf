@@ -69,32 +69,12 @@ variable "container_image" {
   type = list(string)
 }
 
-variable "access_connector_names" {
-  type = list(string)
-  default = [ "vpc-uploader", "vpc-metrics" ]
-}
-
-variable "connector_min_instances" {
-  type = number
-  default = 2
-}
-
-variable "connector_max_instances" {
-  type = number
-  default = 4
-}
-
 variable "role_connect_big_query" {
   type = string
   default = "bigquery.dataEditor"
 }
 
 # module front cloud run
-
-variable "front_vpc_access_connector_name" {
-  type = list(string)
-  default = [ "vpc-fuploader", "vpc-fmetrics" ]
-}
 
 variable "front_cloud_run_name" {
   type = list(string)

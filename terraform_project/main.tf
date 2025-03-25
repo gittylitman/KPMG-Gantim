@@ -36,10 +36,7 @@ module "cloud_run" {
   cloud_run_name = "${var.project_name}-${var.cloud_run_names[count.index]}-${var.environment}"
   location = var.region
   container_image = var.container_image[count.index]
-  vpc_access_connector_name = "${var.project_name}-${var.access_connector_names[count.index]}-${var.environment}"
   service_account_name = "${var.environment}-sa-${var.cloud_run_names[count.index]}"
-  connector_min_instances = var.connector_min_instances
-  connector_max_instances = var.connector_max_instances
   dataset_id = module.bigquery.dataset_id
   role = var.role_connect_big_query
   network_name = module.network.network_id
@@ -53,10 +50,7 @@ module "cloud_run" {
 
 module "front_cloud_run" {
   source = "../modules/front_cloud_run"
-  front_vpc_access_connector_name = "${var.project_name}-${var.front_vpc_access_connector_name[count.index]}-${var.environment}"
   location = var.region
-  connector_min_instances = var.connector_min_instances
-  connector_max_instances = var.connector_max_instances
   front_cloud_run_name =  "${var.project_name}-${var.front_cloud_run_name[count.index]}-${var.environment}"
   front_container_image = var.front_container_image[count.index]
   network_name = module.network.network_id

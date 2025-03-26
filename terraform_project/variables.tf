@@ -1,9 +1,11 @@
 variable "project_id" {
   type = string
+  default = "dgt-gcp-pmo-nec-gnt-dev"
 }
 
 variable "host_project_id" {
   type = string
+  default = "dgt-gcp-pmo-net-office-0"
 }
 
 variable "project_name" {
@@ -25,6 +27,7 @@ variable "vpc_name" {
 
 variable "subnet_cloud_run_name" {
   type = string
+  default = "nec-gnt-snet-dev"
 }
 
 variable "region" {
@@ -63,6 +66,7 @@ variable "cloud_run_names" {
 
 variable "container_image" {
   type = list(string)
+  default = ["me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/uploader:latest", "me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/metrics:latest"]
 }
 
 variable "role_connect_big_query" {
@@ -79,6 +83,7 @@ variable "front_cloud_run_name" {
 
 variable "front_container_image" {
   type = list(string)
+  default = ["me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/uploader:latest", "me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/metrics:latest"]
 }
 
 # module load balancer
@@ -95,10 +100,12 @@ variable "backend_service_name" {
 
 variable "subnet_proxy_name" {
   type = string
+  default = "dev-proxy-only-0"
 }
 
 variable "certificate_name" {
   type = string
+  default = "dev-infra2025"
 }
 
 # module vm instance

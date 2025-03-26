@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "terraform-gantim"
+    bucket  = "nec-gcs-gnt-dev"
     prefix  = "state"
   }
 }

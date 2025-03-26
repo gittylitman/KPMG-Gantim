@@ -1,3 +1,14 @@
+resource "google_project_service" "compute" {
+  service            = "compute.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "time_sleep" "wait_60_seconds" {
+  create_duration = "60s"
+  depends_on = [ google_project_service.compute ]
+}
+
+
 resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
   name                  = var.neg_name[count.index]
   region                = var.region
@@ -6,6 +17,7 @@ resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
     service = var.cloud_run_name[count.index]
   }
   count = length(var.cloud_run_name)
+  depends_on = [ time_sleep.wait_60_seconds ]
 }
 
 resource "google_compute_region_backend_service" "backend_service" {
@@ -16,7 +28,6 @@ resource "google_compute_region_backend_service" "backend_service" {
   backend {
     group = google_compute_region_network_endpoint_group.cloud_run_neg[count.index].id
   }
-
   count = length(var.backend_service_name)
 }
 
@@ -45,6 +56,7 @@ resource "google_compute_region_url_map" "url_map" {
 
 data "google_compute_region_ssl_certificate" "ssl_cert" {
   name        = var.certificate_name
+  region = var.region
 }
 
 data "google_compute_subnetwork" "proxy_subnet" {

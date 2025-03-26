@@ -1,3 +1,13 @@
+resource "google_project_service" "vpcaccess" {
+  service            = "vpcaccess.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "google_project_service" "run" {
+  service            = "run.googleapis.com"
+  disable_on_destroy = false
+}
+
 resource "google_cloud_run_v2_service" "front_cloudrun" {
   name     = var.front_cloud_run_name
   location = var.location
@@ -20,4 +30,9 @@ resource "google_cloud_run_v2_service" "front_cloudrun" {
       }
     }
   }
+
+  depends_on = [ 
+    google_project_service.vpcaccess,
+    google_project_service.run
+ ]
 }

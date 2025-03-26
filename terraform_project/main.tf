@@ -9,8 +9,9 @@ provider "google" {
   project = var.project_id
 }
 
-module "enable_apis" {
-  source = "../modules/enable_apis"
+resource "google_project_service" "cloudresourcemanager" {
+  service            = "cloudresourcemanager.googleapis.com"
+  disable_on_destroy = false
 }
 
 module "network" {
@@ -19,7 +20,7 @@ module "network" {
   vpc_name = var.vpc_name
   subnetwork_names = [var.subnet_cloud_run_name, var.subnet_bigquery_name]
   region = var.region
-  depends_on = [ module.enable_apis ]
+  depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
 module "bigquery" {
@@ -27,7 +28,7 @@ module "bigquery" {
   dataset_id = "${replace(var.project_name, "-", "_")}_bgquery_${var.environment}"
   location = var.region
   tables = var.tables
-  depends_on = [ module.enable_apis ]
+  depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
 module "cloud_run" {
@@ -44,7 +45,10 @@ module "cloud_run" {
   network_name = module.network.network_id
   subnetwork_name = module.network.subnet_id
   count = length(var.cloud_run_names)
-  depends_on = [ module.bigquery ]
+  depends_on = [ 
+    google_project_service.cloudresourcemanager,
+    module.bigquery
+  ]
 }
 
 module "front_cloud_run" {
@@ -58,6 +62,7 @@ module "front_cloud_run" {
   network_name = module.network.network_id
   subnetwork_name = module.network.subnet_id
   count = length(var.front_cloud_run_name)
+  depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
 module "load_balancer" {
@@ -74,7 +79,10 @@ module "load_balancer" {
   https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"
   subnet_private_name = module.network.subnet_id
   host_project_id = var.host_project_id
-  depends_on = [ module.front_cloud_run ]
+  depends_on = [ 
+    google_project_service.cloudresourcemanager,
+    module.front_cloud_run
+  ]
 }
 
 module "ubuntu_vm_instance" {
@@ -84,4 +92,5 @@ module "ubuntu_vm_instance" {
   vm_name = "${var.project_name}-ubut-vm-${var.environment}"
   network_name = module.network.network_id
   subnetwork_name = module.network.subnet_id
+  depends_on = [ google_project_service.cloudresourcemanager ]
 }

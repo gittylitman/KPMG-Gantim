@@ -18,7 +18,7 @@ module "network" {
   source = "../modules/network"
   host_project_id = var.host_project_id
   vpc_name = var.vpc_name
-  subnetwork_names = [var.subnet_cloud_run_name, var.subnet_bigquery_name]
+  subnetwork_names = [var.subnet_cloud_run_name]
   region = var.region
   depends_on = [ google_project_service.cloudresourcemanager ]
 }

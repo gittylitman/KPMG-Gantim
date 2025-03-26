@@ -27,10 +27,6 @@ variable "subnet_cloud_run_name" {
   type = string
 }
 
-variable "subnet_bigquery_name" {
-  type = string
-}
-
 variable "region" {
   type = string
   default = "me-west1"

@@ -1,16 +1,4 @@
-variable "front_vpc_access_connector_name" {
-  type = string
-}
-
 variable "location" {
-  type = string
-}
-
-variable "connector_min_instances" {
-  type = string
-}
-
-variable "connector_max_instances" {
   type = string
 }
 

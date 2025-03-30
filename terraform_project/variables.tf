@@ -2,6 +2,10 @@ variable "project_id" {
   type = string
 }
 
+variable "host_project_id" {
+  type = string
+}
+
 variable "project_name" {
   type = string
   default = "nec-gnt"
@@ -14,14 +18,18 @@ variable "environment" {
 
 # module network
 
+variable "vpc_name" {
+  type = string
+  default = "dev"
+}
+
+variable "subnet_cloud_run_name" {
+  type = string
+}
+
 variable "region" {
   type = string
   default = "me-west1"
-}
-
-variable "ip_cidr_range" {
-  type = string
-  default = "100.69.3.0/28"
 }
 
 # module bigquery
@@ -57,32 +65,12 @@ variable "container_image" {
   type = list(string)
 }
 
-variable "access_connector_names" {
-  type = list(string)
-  default = [ "vpc-uploader", "vpc-metrics" ]
-}
-
-variable "connector_min_instances" {
-  type = number
-  default = 2
-}
-
-variable "connector_max_instances" {
-  type = number
-  default = 4
-}
-
 variable "role_connect_big_query" {
   type = string
   default = "bigquery.dataEditor"
 }
 
 # module front cloud run
-
-variable "front_vpc_access_connector_name" {
-  type = list(string)
-  default = [ "vpc-fuploader", "vpc-fmetrics" ]
-}
 
 variable "front_cloud_run_name" {
   type = list(string)
@@ -105,16 +93,11 @@ variable "backend_service_name" {
   default = ["admin","metric"]
 }
 
-variable "proxy_subnet_range" {
-  type = string
-  default = "100.69.4.0/26"
-}
-
-variable "cert_file" {
+variable "subnet_proxy_name" {
   type = string
 }
 
-variable "private_key_file" {
+variable "certificate_name" {
   type = string
 }
 

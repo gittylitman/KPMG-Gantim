@@ -1,3 +1,14 @@
+resource "google_project_service" "compute" {
+  service            = "compute.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "time_sleep" "wait_60_seconds" {
+  create_duration = "60s"
+  depends_on = [ google_project_service.compute ]
+}
+
+
 resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
   name                  = var.neg_name[count.index]
   region                = var.region
@@ -6,6 +17,7 @@ resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
     service = var.cloud_run_name[count.index]
   }
   count = length(var.cloud_run_name)
+  depends_on = [ time_sleep.wait_60_seconds ]
 }
 
 resource "google_compute_region_backend_service" "backend_service" {
@@ -16,7 +28,6 @@ resource "google_compute_region_backend_service" "backend_service" {
   backend {
     group = google_compute_region_network_endpoint_group.cloud_run_neg[count.index].id
   }
-
   count = length(var.backend_service_name)
 }
 
@@ -43,28 +54,23 @@ resource "google_compute_region_url_map" "url_map" {
   }
 }
 
-resource "google_compute_region_ssl_certificate" "ssl_cert" {
-  region      = var.region
+data "google_compute_region_ssl_certificate" "ssl_cert" {
   name        = var.certificate_name
-  private_key = file(var.private_key_file)
-  certificate = file(var.cert_file)
+  region = var.region
 }
 
-resource "google_compute_subnetwork" "proxy_subnet" {
+data "google_compute_subnetwork" "proxy_subnet" {
   name          = var.subnet_name
   region        = var.region
-  ip_cidr_range = var.ip_range
-  purpose       = "REGIONAL_MANAGED_PROXY"
-  role          = "ACTIVE"
-  network       = var.network_id
+  project = var.host_project_id
 }
 
 resource "google_compute_region_target_https_proxy" "https_proxy" {
   name    = var.http_proxy_name
   region  = var.region
   url_map = google_compute_region_url_map.url_map.id
-  ssl_certificates = [ google_compute_region_ssl_certificate.ssl_cert.id ]
-  depends_on = [ google_compute_region_ssl_certificate.ssl_cert ]
+  ssl_certificates = [ data.google_compute_region_ssl_certificate.ssl_cert.id ]
+  depends_on = [ data.google_compute_region_ssl_certificate.ssl_cert ]
 }
 
 resource "google_compute_forwarding_rule" "https_forwarding_rule" {
@@ -75,5 +81,5 @@ resource "google_compute_forwarding_rule" "https_forwarding_rule" {
   port_range            = "443"
   network               = var.vpc_name
   subnetwork            = var.subnet_private_name
-  depends_on = [ google_compute_subnetwork.proxy_subnet ]
+  depends_on = [ data.google_compute_subnetwork.proxy_subnet ]
 }

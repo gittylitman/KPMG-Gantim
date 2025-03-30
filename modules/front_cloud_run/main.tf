@@ -1,11 +1,11 @@
-resource "google_vpc_access_connector" "connector" {
-  name = var.front_vpc_access_connector_name
-  region = var.location
-  subnet {
-    name = var.subnet_name
-  }
-  min_instances = var.connector_min_instances
-  max_instances = var.connector_max_instances
+resource "google_project_service" "vpcaccess" {
+  service            = "vpcaccess.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "google_project_service" "run" {
+  service            = "run.googleapis.com"
+  disable_on_destroy = false
 }
 
 resource "google_cloud_run_v2_service" "front_cloudrun" {
@@ -23,9 +23,16 @@ resource "google_cloud_run_v2_service" "front_cloudrun" {
     }
 
     vpc_access {
-       connector = google_vpc_access_connector.connector.id
-       egress = "ALL_TRAFFIC"
+      network_interfaces {
+        network = var.network_name
+        subnetwork = var.subnetwork_name
+        tags = []
+      }
     }
   }
-}
 
+  depends_on = [ 
+    google_project_service.vpcaccess,
+    google_project_service.run
+ ]
+}

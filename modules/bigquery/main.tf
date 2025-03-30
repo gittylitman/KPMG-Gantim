@@ -1,6 +1,12 @@
+resource "google_project_service" "bigquery" {
+  service            = "bigquery.googleapis.com"
+  disable_on_destroy = false
+}
+
 resource "google_bigquery_dataset" "bigquery_dataset" {
   dataset_id                  = var.dataset_id
   location                    = var.location
+  depends_on = [ google_project_service.bigquery ]
 }
 
 resource "google_bigquery_table" "bigquery_table" {

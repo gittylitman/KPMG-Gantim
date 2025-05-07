@@ -14,13 +14,25 @@ resource "google_project_service" "cloudresourcemanager" {
   disable_on_destroy = false
 }
 
+resource "google_project_service" "serviceusage" {
+  service            = "serviceusage.googleapis.com"
+  disable_on_destroy = false
+  depends_on = [ google_project_service.cloudresourcemanager ]
+}
+
+resource "google_project_service" "iam" {
+  service            = "iam.googleapis.com"
+  disable_on_destroy = false
+}
+
 module "network" {
   source = "../modules/network"
   host_project_id = var.host_project_id
   vpc_name = var.vpc_name
   subnetwork_names = [var.subnet_cloud_run_name, var.subnet_bigquery_name]
   region = var.region
-  depends_on = [ google_project_service.cloudresourcemanager ]
+   depends_on = [ google_project_service.serviceusage,
+                 google_project_service.iam ]
 }
 
 module "bigquery" {

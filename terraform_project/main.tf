@@ -25,6 +25,11 @@ resource "google_project_service" "iam" {
   disable_on_destroy = false
 }
 
+resource "time_sleep" "wait_60_seconds" {
+  create_duration = "60s"
+  depends_on = [ google_project_service.iam ]
+}
+
 module "network" {
   source = "../modules/network"
   host_project_id = var.host_project_id
@@ -32,7 +37,7 @@ module "network" {
   subnetwork_names = [var.subnet_cloud_run_name, var.subnet_bigquery_name]
   region = var.region
    depends_on = [ google_project_service.serviceusage,
-                 google_project_service.iam ]
+                 time_sleep.wait_60_seconds ]
 }
 
 module "bigquery" {

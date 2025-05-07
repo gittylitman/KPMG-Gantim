@@ -26,9 +26,9 @@ variable "cloud_run_name" {
   type = list(string)
 } 
 
-variable "certificate_name" {
-  type = string
-}
+# variable "certificate_name" {
+#   type = string
+# }
 
 variable "http_proxy_name" {
   type = string 

@@ -1,11 +1,11 @@
 variable "project_id" {
   type = string
-  default = "gantt-service-project"
+  default = "project-management-459011"
 }
 
 variable "host_project_id" {
   type = string
-  default = "gantt-host-project"
+  default = "project-management-459011"
 }
 
 variable "project_name" {
@@ -128,10 +128,10 @@ variable "subnet_proxy_name" {
   default = "dev-proxy-only-0"
 }
 
-variable "certificate_name" {
-  type = string
-  default = "dev-infra2025"
-}
+# variable "certificate_name" {
+#   type = string
+#   default = "dev-infra2025"
+# }
 
 # module vm instance
 

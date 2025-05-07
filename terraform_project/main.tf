@@ -23,33 +23,33 @@ module "network" {
   depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
-# module "bigquery" {
-#   source = "../modules/bigquery"
-#   dataset_id = "${replace(var.project_name, "-", "_")}_bgquery_${var.environment}"
-#   location = var.region
-#   tables = var.tables
-#   depends_on = [ google_project_service.cloudresourcemanager ]
-# }
+module "bigquery" {
+  source = "../modules/bigquery"
+  dataset_id = "${replace(var.project_name, "-", "_")}_bgquery_${var.environment}"
+  location = var.region
+  tables = var.tables
+  depends_on = [ google_project_service.cloudresourcemanager ]
+}
 
-# module "cloud_run" {
-#   source = "../modules/cloud_run"
-#   cloud_run_name = "${var.project_name}-${var.cloud_run_names[count.index]}-${var.environment}"
-#   location = var.region
-#   container_image = var.container_image[count.index]
-#   vpc_access_connector_name = "${var.project_name}-${var.access_connector_names[count.index]}-${var.environment}"
-#   service_account_name = "${var.environment}-sa-${var.cloud_run_names[count.index]}"
-#   connector_min_instances = var.connector_min_instances
-#   connector_max_instances = var.connector_max_instances
-#   dataset_id = module.bigquery.dataset_id
-#   role = var.role_connect_big_query
-#   network_name = module.network.network_id
-#   subnetwork_name = module.network.subnet_id
-#   count = length(var.cloud_run_names)
-#   depends_on = [ 
-#     google_project_service.cloudresourcemanager,
-#     module.bigquery
-#   ]
-# }
+module "cloud_run" {
+  source = "../modules/cloud_run"
+  cloud_run_name = "${var.project_name}-${var.cloud_run_names[count.index]}-${var.environment}"
+  location = var.region
+  container_image = var.container_image[count.index]
+  vpc_access_connector_name = "${var.project_name}-${var.access_connector_names[count.index]}-${var.environment}"
+  service_account_name = "${var.environment}-sa-${var.cloud_run_names[count.index]}"
+  connector_min_instances = var.connector_min_instances
+  connector_max_instances = var.connector_max_instances
+  dataset_id = module.bigquery.dataset_id
+  role = var.role_connect_big_query
+  network_name = module.network.network_id
+  subnetwork_name = module.network.subnet_id
+  count = length(var.cloud_run_names)
+  depends_on = [ 
+    google_project_service.cloudresourcemanager,
+    module.bigquery
+  ]
+}
 
 module "front_cloud_run" {
   source = "../modules/front_cloud_run"
@@ -74,7 +74,6 @@ module "load_balancer" {
   subnet_name = var.subnet_proxy_name
   lb_name = "${var.project_name}-ilb-${var.environment}"
   cloud_run_name = ["${var.project_name}-${var.front_cloud_run_name[0]}-${var.environment}","${var.project_name}-${var.front_cloud_run_name[1]}-${var.environment}"]
-  # certificate_name = var.certificate_name
   http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
   https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"
   subnet_private_name = module.network.subnet_id

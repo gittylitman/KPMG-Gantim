@@ -128,11 +128,6 @@ variable "subnet_proxy_name" {
   default = "dev-proxy-only-0"
 }
 
-# variable "certificate_name" {
-#   type = string
-#   default = "dev-infra2025"
-# }
-
 # module vm instance
 
 variable "zone_part" {

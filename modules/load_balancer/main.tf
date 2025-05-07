@@ -77,9 +77,9 @@ resource "google_compute_forwarding_rule" "http_forwarding_rule" {
   name                  = var.https_forwarding_rule_name
   region                = var.region
   load_balancing_scheme = "INTERNAL_MANAGED"
-  target                = google_compute_region_target_https_proxy.https_proxy.self_link
+  target                = google_compute_region_target_http_proxy.http_proxy.self_link
   port_range            = "80"
   network               = var.vpc_name
   subnetwork            = var.subnet_private_name
-  depends_on = [ data.google_compute_subnetwork.proxy_subnet ]
+  # depends_on = [ data.google_compute_subnetwork.proxy_subnet ]
 }

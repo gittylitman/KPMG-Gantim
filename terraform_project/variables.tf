@@ -1,11 +1,11 @@
 variable "project_id" {
   type = string
-  default = "dgt-gcp-pmo-nec-gnt-dev"
+  default = "project-management-459011"
 }
 
 variable "host_project_id" {
   type = string
-  default = "dgt-gcp-pmo-net-office-0"
+  default = "project-management-459011"
 }
 
 variable "project_name" {

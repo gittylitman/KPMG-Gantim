@@ -15,7 +15,7 @@ variable "project_name" {
 
 variable "environment" {
   type = string
-  default = "dev"
+  default = "try"
 }
 
 # module network
@@ -27,7 +27,7 @@ variable "vpc_name" {
 
 variable "subnet_cloud_run_name" {
   type = string
-  default = "nec-gnt-snet-dev"
+  default = "snet-dev"
 }
 
 variable "region" {
@@ -95,7 +95,7 @@ variable "backend_service_name" {
 
 variable "subnet_proxy_name" {
   type = string
-  default = "dev-proxy-only-0"
+  default = "snet-dev-proxy"
 }
 
 # module vm instance

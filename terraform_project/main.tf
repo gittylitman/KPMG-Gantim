@@ -20,6 +20,26 @@ resource "google_project_service" "cloudresourcemanager" {
   depends_on = [ google_project_service.serviceusage ]
 }
 
+data "google_project" "project" {
+  project_id = var.project_id
+}
+
+resource "google_project_service" "iam" {
+  project = var.project_id
+  service            = "iam.googleapis.com"
+  disable_on_destroy = false
+  depends_on = [ google_project_service.cloudresourcemanager ]
+}
+
+resource "google_project_iam_binding" "project" {
+  project = var.host_project_id
+  role = "roles/compute.networkUser"
+  members = [
+      "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com",
+  ]
+  depends_on = [ google_project_service.iam ]
+}
+
 module "network" {
   source = "../modules/network"
   host_project_id = var.host_project_id

@@ -41,6 +41,5 @@ resource "google_cloud_run_v2_service" "cloud_run"{
   depends_on = [ 
     google_project_service.run,
     google_project_service.vpcaccess,
-    google_bigquery_dataset_iam_member.bq_access
  ]
 }

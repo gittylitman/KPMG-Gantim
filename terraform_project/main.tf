@@ -74,7 +74,6 @@ module "load_balancer" {
   subnet_name = var.subnet_proxy_name
   lb_name = "${var.project_name}-ilb-${var.environment}"
   cloud_run_name = ["${var.project_name}-${var.front_cloud_run_name[0]}-${var.environment}","${var.project_name}-${var.front_cloud_run_name[1]}-${var.environment}"]
-  certificate_name = var.certificate_name
   http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
   https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"
   subnet_private_name = module.network.subnet_id

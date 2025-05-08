@@ -59,12 +59,11 @@ module "bigquery" {
 
 module "cloud_run" {
   source = "../modules/cloud_run"
+  project_id = var.project_id
   cloud_run_name = "${var.project_name}-${var.cloud_run_names[count.index]}-${var.environment}"
   location = var.region
   container_image = var.container_image[count.index]
   service_account_name = "${var.environment}-sa-${var.cloud_run_names[count.index]}"
-  dataset_id = module.bigquery.dataset_id
-  role = var.role_connect_big_query
   network_name = module.network.network_id
   subnetwork_name = module.network.subnet_id
   count = length(var.cloud_run_names)

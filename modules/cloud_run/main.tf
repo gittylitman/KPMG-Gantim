@@ -12,6 +12,12 @@ resource "google_service_account" "cloudrun_service_account" {
   account_id = var.service_account_name
 }
 
+resource "google_project_iam_member" "bigquery_access" {
+  project = var.project_id
+  role    = "roles/${var.role}"
+  member  = "serviceAccount:${google_service_account.cloudrun_service_account.email}"
+}
+
 resource "google_cloud_run_v2_service" "cloud_run"{
   name = var.cloud_run_name
   location = var.location
@@ -37,11 +43,4 @@ resource "google_cloud_run_v2_service" "cloud_run"{
     google_project_service.vpcaccess,
     google_bigquery_dataset_iam_member.bq_access
  ]
-}
-
-resource "google_bigquery_dataset_iam_member" "bq_access" {
-  dataset_id = var.dataset_id
-  role = "roles/${var.role}"
-  member = "serviceAccount:${google_service_account.cloudrun_service_account.email}"
-  depends_on = [ google_service_account.cloudrun_service_account ]
 }

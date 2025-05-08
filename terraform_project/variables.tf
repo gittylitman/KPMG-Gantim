@@ -69,11 +69,6 @@ variable "container_image" {
   default = ["me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/uploader:latest", "me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/metrics:latest"]
 }
 
-variable "role_connect_big_query" {
-  type = string
-  default = "bigquery.dataEditor"
-}
-
 # module front cloud run
 
 variable "front_cloud_run_name" {

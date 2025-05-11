@@ -18,18 +18,38 @@ resource "google_project_service" "serviceusage" {
   service            = "serviceusage.googleapis.com"
   disable_on_destroy = false
   depends_on = [ google_project_service.cloudresourcemanager ]
-
 }
 
 data "google_project" "project" {
   project_id = var.project_id
 }
 
+resource "google_project_iam_member" "service_usage_consumer" {
+  project = var.host_project_id
+  role    = "roles/serviceusage.serviceUsageConsumer"
+  member = "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
+}
+
+resource "google_project_iam_member" "service_account_user" {
+  project = var.host_project_id
+  role    = "roles/iam.serviceAccountUser"
+    member = "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
+
+}
+
+resource "google_project_iam_member" "service_account_admin" {
+  project = var.host_project_id
+  role    = "roles/iam.serviceAccountAdmin"
+  member = "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
+  }
+
 resource "google_project_service" "iam" {
   project = var.project_id
   service            = "iam.googleapis.com"
   disable_on_destroy = false
-  depends_on = [ google_project_service.serviceusage ]
+  depends_on = [ google_project_iam_member.service_account_admin,
+                 google_project_iam_member.service_account_user, 
+                 google_project_iam_member.service_usage_consumer ]
 }
 
 resource "google_project_iam_binding" "project" {

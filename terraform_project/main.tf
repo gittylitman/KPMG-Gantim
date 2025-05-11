@@ -40,6 +40,27 @@ resource "google_project_iam_binding" "project" {
   depends_on = [ google_project_service.iam ]
 }
 
+resource "google_project_iam_member" "service_usage_consumer" {
+  project = var.host_project_id
+  role    = "roles/serviceusage.serviceUsageConsumer"
+  member  =  "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
+  depends_on = [ google_project_service.iam ]
+}
+
+resource "google_project_iam_member" "service_account_user" {
+  project = var.host_project_id
+  role    = "roles/iam.serviceAccountUser"
+  member  =  "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
+  depends_on = [ google_project_service.iam ]
+}
+
+resource "google_project_iam_member" "service_account_admin" {
+  project = var.host_project_id
+  role    = "roles/iam.serviceAccountAdmin"
+  member  =  "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
+  depends_on = [ google_project_service.iam ]
+}
+
 module "network" {
   source = "../modules/network"
   host_project_id = var.host_project_id

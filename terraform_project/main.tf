@@ -9,15 +9,16 @@ provider "google" {
   project = var.project_id
 }
 
-resource "google_project_service" "serviceusage" {
-  service            = "serviceusage.googleapis.com"
-  disable_on_destroy = false
-}
-
 resource "google_project_service" "cloudresourcemanager" {
   service            = "cloudresourcemanager.googleapis.com"
   disable_on_destroy = false
-  depends_on = [ google_project_service.serviceusage ]
+}
+
+resource "google_project_service" "serviceusage" {
+  service            = "serviceusage.googleapis.com"
+  disable_on_destroy = false
+  depends_on = [ google_project_service.cloudresourcemanager ]
+
 }
 
 data "google_project" "project" {
@@ -28,7 +29,6 @@ resource "google_project_service" "iam" {
   project = var.project_id
   service            = "iam.googleapis.com"
   disable_on_destroy = false
-  depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
 resource "time_sleep" "wait_60_seconds" {
@@ -54,7 +54,8 @@ module "network" {
   vpc_name = var.vpc_name
   subnetwork_names = [var.subnet_cloud_run_name]
   region = var.region
-  depends_on = [ google_project_service.cloudresourcemanager ]
+  depends_on = [ google_project_service.serviceusage,
+                 google_project_service.iam ]
 }
 
 module "bigquery" {

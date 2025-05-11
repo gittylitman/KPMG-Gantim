@@ -66,7 +66,7 @@ variable "cloud_run_names" {
 
 variable "container_image" {
   type = list(string)
-  default = ["me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/uploader:latest", "me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/metrics:latest"]
+  default = ["us-docker.pkg.dev/cloudrun/container/hello", "us-docker.pkg.dev/cloudrun/container/hello"]
 }
 
 # module front cloud run
@@ -78,7 +78,7 @@ variable "front_cloud_run_name" {
 
 variable "front_container_image" {
   type = list(string)
-  default = ["me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/uploader:latest", "me-west1-docker.pkg.dev/dgt-gcp-pmo-nec-gnt-dev/nec-gnt-repo-dev/metrics:latest"]
+  default = ["us-docker.pkg.dev/cloudrun/container/hello", "us-docker.pkg.dev/cloudrun/container/hello"]
 }
 
 # module load balancer

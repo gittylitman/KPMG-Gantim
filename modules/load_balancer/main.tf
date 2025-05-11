@@ -23,7 +23,7 @@ resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
 resource "google_compute_region_backend_service" "backend_service" {
   name                  = var.backend_service_name[count.index]
   region                = var.region
-  protocol              = "HTTPS"
+  protocol              = "HTTP"
   load_balancing_scheme = "INTERNAL_MANAGED"
   backend {
     group = google_compute_region_network_endpoint_group.cloud_run_neg[count.index].id

@@ -28,29 +28,8 @@ resource "google_project_service" "iam" {
   project = var.project_id
   service            = "iam.googleapis.com"
   disable_on_destroy = false
-  
+  depends_on = [ google_project_service.serviceusage ]
 }
-
-resource "google_project_iam_member" "service_usage_consumer" {
-  project = var.host_project_id
-  role    = "roles/serviceusage.serviceUsageConsumer"
-  member = "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
-  depends_on = [ google_project_service.iam ]
-}
-
-resource "google_project_iam_member" "service_account_user" {
-  project = var.host_project_id
-  role    = "roles/iam.serviceAccountUser"
-  member = "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
-  depends_on = [ google_project_service.iam ]
-}
-
-resource "google_project_iam_member" "service_account_admin" {
-  project = var.host_project_id
-  role    = "roles/iam.serviceAccountAdmin"
-  member = "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
-  depends_on = [ google_project_service.iam ]
-  }
 
 resource "google_project_iam_binding" "project" {
   project = var.host_project_id
@@ -58,18 +37,7 @@ resource "google_project_iam_binding" "project" {
   members = [
       "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com",
   ]
-  depends_on = [ google_project_iam_member.service_account_admin,
-                 google_project_iam_member.service_account_user, 
-                 google_project_iam_member.service_usage_consumer ]
-}
-
-resource "time_sleep" "wait_60_seconds" {
-  create_duration = "60s"
-  depends_on = [ google_project_service.serviceusage,
-                 google_project_service.cloudresourcemanager,
-                 google_project_service.iam,
-                 google_project_iam_binding.project
-   ]
+  depends_on = [ google_project_service.iam ]
 }
 
 module "network" {
@@ -78,9 +46,8 @@ module "network" {
   vpc_name = var.vpc_name
   subnetwork_names = [var.subnet_cloud_run_name]
   region = var.region
-  depends_on = [ google_project_service.serviceusage,
-                 google_project_iam_binding.project,
-                 time_sleep.wait_60_seconds ]
+  depends_on = [ google_project_service.serviceusage]
+               
 }
 
 module "bigquery" {

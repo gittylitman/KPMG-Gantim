@@ -21,22 +21,14 @@ resource "google_project_service" "serviceusage" {
 
 }
 
-# data "google_project" "project" {
-#   project_id = var.project_id
-# }
+data "google_project" "project" {
+  project_id = var.project_id
+}
 
 resource "google_project_service" "iam" {
   # project = var.project_id
   service            = "iam.googleapis.com"
   disable_on_destroy = false
-}
-
-resource "time_sleep" "wait_60_seconds" {
-  create_duration = "60s"
-  depends_on = [ google_project_service.serviceusage,
-                 google_project_service.cloudresourcemanager,
-                 google_project_service.iam
-   ]
 }
 
 resource "google_project_iam_binding" "project" {
@@ -46,6 +38,14 @@ resource "google_project_iam_binding" "project" {
       "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com",
   ]
   depends_on = [ google_project_service.iam ]
+}
+
+resource "time_sleep" "wait_60_seconds" {
+  create_duration = "60s"
+  depends_on = [ google_project_service.serviceusage,
+                 google_project_service.cloudresourcemanager,
+                 google_project_iam_binding.project
+   ]
 }
 
 module "network" {

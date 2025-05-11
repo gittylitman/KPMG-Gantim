@@ -46,7 +46,8 @@ module "network" {
   vpc_name = var.vpc_name
   subnetwork_names = [var.subnet_cloud_run_name]
   region = var.region
-  depends_on = [ google_project_service.cloudresourcemanager ]
+  depends_on = [ google_project_service.cloudresourcemanager,
+                 google_project_service.iam ]
 }
 
 module "bigquery" {

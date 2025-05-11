@@ -26,9 +26,10 @@ data "google_project" "project" {
 }
 
 resource "google_project_service" "iam" {
-  # project = var.project_id
+  project = var.project_id
   service            = "iam.googleapis.com"
   disable_on_destroy = false
+  depends_on = [ google_project_service.serviceusage ]
 }
 
 resource "google_project_iam_binding" "project" {
@@ -40,14 +41,6 @@ resource "google_project_iam_binding" "project" {
   depends_on = [ google_project_service.iam ]
 }
 
-resource "time_sleep" "wait_60_seconds" {
-  create_duration = "60s"
-  depends_on = [ google_project_service.serviceusage,
-                 google_project_service.cloudresourcemanager,
-                 google_project_iam_binding.project
-   ]
-}
-
 module "network" {
   source = "../modules/network"
   host_project_id = var.host_project_id
@@ -55,7 +48,7 @@ module "network" {
   subnetwork_names = [var.subnet_cloud_run_name]
   region = var.region
   depends_on = [ google_project_service.serviceusage,
-                 google_project_service.iam ]
+                 google_project_iam_binding.project ]
 }
 
 module "bigquery" {

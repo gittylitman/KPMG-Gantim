@@ -31,6 +31,14 @@ resource "google_project_service" "iam" {
   depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
+resource "time_sleep" "wait_60_seconds" {
+  create_duration = "60s"
+  depends_on = [ google_project_service.serviceusage,
+                 google_project_service.cloudresourcemanager,
+                 google_project_service.iam
+   ]
+}
+
 resource "google_project_iam_binding" "project" {
   project = var.host_project_id
   role = "roles/compute.networkUser"
@@ -46,8 +54,7 @@ module "network" {
   vpc_name = var.vpc_name
   subnetwork_names = [var.subnet_cloud_run_name]
   region = var.region
-  depends_on = [ google_project_service.cloudresourcemanager,
-                 google_project_service.iam ]
+  depends_on = [ google_project_service.cloudresourcemanager ]
 }
 
 module "bigquery" {

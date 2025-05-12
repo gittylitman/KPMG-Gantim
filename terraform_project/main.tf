@@ -32,7 +32,7 @@ resource "google_project_service" "iam" {
 }
 
 resource "google_service_account" "service" {
-  account_id   = data.google_project.project.number
+  account_id   = "service-${data.google_project.project.number}"
   display_name = "Example Service Account"
   project      = var.project_id
   depends_on = [ google_project_service.iam ]

@@ -44,7 +44,7 @@ resource "google_project_iam_binding" "project" {
   members = [
       "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com",
   ]
-  depends_on = [ google_project_service.iam ]
+  depends_on = [ google_service_account.service ]
 }
 
 module "network" {

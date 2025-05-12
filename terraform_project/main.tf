@@ -31,20 +31,12 @@ resource "google_project_service" "iam" {
   depends_on = [ google_project_service.serviceusage ]
 }
 
-resource "google_service_account" "service" {
-  account_id   = "service-${data.google_project.project.number}"
-  display_name = "Example Service Account"
-  project      = var.project_id
-  depends_on = [ google_project_service.iam ]
-}
-
 resource "google_project_iam_binding" "project" {
   project = var.host_project_id
   role = "roles/compute.networkUser"
   members = [
       "serviceAccount:service-${data.google_project.project.number}@serverless-robot-prod.iam.gserviceaccount.com",
   ]
-  depends_on = [ google_service_account.service ]
 }
 
 module "network" {

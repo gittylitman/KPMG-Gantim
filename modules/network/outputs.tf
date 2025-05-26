@@ -1,7 +1,7 @@
-output "network_id" {
-  value = data.google_compute_network.vpc_network.id
+output "network_name" {
+  value = data.google_compute_network.vpc_network.name
 }
 
-output "subnet_id" {
-  value = data.google_compute_subnetwork.subnetwork[0].id
+output "subnetworks_names" {
+  value = data.google_compute_subnetwork.subnetwork
 }

@@ -18,14 +18,6 @@ variable "service_account_name" {
   type = string
 }
 
-variable "network_name"{
-  type = string
-}
-
-variable "subnetwork_name"{
-  type = string
-}
-
 variable "role" {
   type = string
   default = "bigquery.dataOwner"

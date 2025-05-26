@@ -26,8 +26,8 @@ variable "vpc_name" {
 }
 
 variable "subnet_cloud_run_name" {
-  type = string
-  default = "snet-dev"
+  type = list(string)
+  default = [ "neg-gnt-compute-back-snet" , "neg-gnt-compute-front-snet" ]
 }
 
 variable "region" {

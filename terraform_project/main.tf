@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "nec-gcs-gnt-dev2"
+    bucket  = "nec-gcs-gnt-dev"
     prefix  = "state"
   }
 }
@@ -43,7 +43,7 @@ module "network" {
   source = "../modules/network"
   host_project_id = var.host_project_id
   vpc_name = var.vpc_name
-  subnetwork_names = var.subnet_cloud_run_name
+  subnetwork_names = var.subnet_cloud_run_names
   region = var.region
   depends_on = [ google_project_service.serviceusage]         
 }

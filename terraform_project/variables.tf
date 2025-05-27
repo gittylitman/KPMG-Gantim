@@ -20,7 +20,7 @@ variable "vpc_name" {
   type = string
 }
 
-variable "subnet_cloud_run_name" {
+variable "subnet_cloud_run_names" {
   type = list(string)
   default = [ "neg-gnt-compute-back-snet" , "neg-gnt-compute-front-snet" ]
 }

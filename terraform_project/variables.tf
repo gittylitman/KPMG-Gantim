@@ -1,11 +1,11 @@
 variable "project_id" {
   type = string
-  default = "project-management-459011"
+  default = "project-management-458812"
 }
 
 variable "host_project_id" {
   type = string
-  default = "project-management-459011"
+  default = "project-management-458812"
 }
 
 variable "project_name" {
@@ -95,7 +95,7 @@ variable "backend_service_name" {
 
 variable "subnet_proxy_name" {
   type = string
-  default = "snet-dev-proxy"
+  default = "nec-gnt-proxy-snet"
 }
 
 # module vm instance

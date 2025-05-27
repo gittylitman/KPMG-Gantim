@@ -10,6 +10,14 @@ variable "vm_name" {
   type = string
 }
 
+variable "network_name" {
+  type = string
+}
+
+variable "subnet_name" {
+  type = string
+}
+
 variable "machine_type" {
   type = string
   default = "e2-standard-4"

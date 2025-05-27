@@ -31,8 +31,8 @@ resource "google_compute_instance" "ubuntu_vm"{
     }
 
     network_interface {
-      network = module.network.network_name
-      subnetwork = module.subnetworks_names[1].name
+      network = var.network_name
+      subnetwork = var.subnet_name
     }
 
     metadata_startup_script = <<-EOT

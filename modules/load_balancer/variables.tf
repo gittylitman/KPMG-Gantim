@@ -29,3 +29,11 @@ variable "https_forwarding_rule_name" {
 variable "host_project_id" {
   type = string
 }
+
+variable "network_name" {
+  type = string
+}
+
+variable "subnet_name" {
+  type = string
+}

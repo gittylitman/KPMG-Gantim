@@ -66,6 +66,6 @@ resource "google_compute_forwarding_rule" "http_forwarding_rule" {
   load_balancing_scheme = "INTERNAL_MANAGED"
   target                = google_compute_region_target_http_proxy.http_proxy.self_link
   port_range            = "80"
-  network               =  module.network.network_name
-  subnetwork = module.network.subnetworks_names[1].name
+  network = var.network_name
+  subnetwork = var.subnet_name
 }

@@ -62,6 +62,8 @@ module "cloud_run" {
   cloud_run_name = "${var.project_name}-${var.cloud_run_names[count.index]}-${var.environment}"
   location = var.region
   container_image = var.container_image[count.index]
+  network_name = module.network.network_name
+  subnet_name = module.network.subnetworks_names[0].name
   service_account_name = "${var.environment}-sa-${var.cloud_run_names[count.index]}"
   count = length(var.cloud_run_names)
   depends_on = [ 
@@ -75,6 +77,8 @@ module "front_cloud_run" {
   location = var.region
   front_cloud_run_name =  "${var.project_name}-${var.front_cloud_run_name[count.index]}-${var.environment}"
   front_container_image = var.front_container_image[count.index]
+  network_name = module.network.network_name
+  subnet_name = module.network.subnetworks_names[1].name
   count = length(var.front_cloud_run_name)
   depends_on = [ google_project_service.cloudresourcemanager ]
 }
@@ -86,6 +90,8 @@ module "load_balancer" {
   backend_service_name =["${var.project_name}-bsrv-${var.backend_service_name[0]}-${var.environment}","${var.project_name}-bsrv-${var.backend_service_name[1]}-${var.environment}"]
   lb_name = "${var.project_name}-ilb-${var.environment}"
   cloud_run_name = ["${var.project_name}-${var.front_cloud_run_name[0]}-${var.environment}","${var.project_name}-${var.front_cloud_run_name[1]}-${var.environment}"]
+  network_name = module.network.network_name
+  subnet_name = module.network.subnetworks_names[1].name
   http_proxy_name = "${var.project_name}-server-prxy-${var.environment}"
   https_forwarding_rule_name = "${var.project_name}-server-prxy-fwrule-${var.environment}"
   host_project_id = var.host_project_id
@@ -100,5 +106,7 @@ module "ubuntu_vm_instance" {
   service_account_vm_name = "${var.project_name}-ubut-sa-vm-${var.environment}"
   zone = "${var.region}-${var.zone_part}"
   vm_name = "${var.project_name}-ubut-vm-${var.environment}"
+  network_name = module.network.network_name
+  subnet_name = module.network.subnetworks_names[1].name
   depends_on = [ google_project_service.cloudresourcemanager ]
 }

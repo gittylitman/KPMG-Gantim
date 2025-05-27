@@ -8,7 +8,6 @@ resource "time_sleep" "wait_60_seconds" {
   depends_on = [ google_project_service.compute ]
 }
 
-
 resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
   name                  = var.neg_name[count.index]
   region                = var.region

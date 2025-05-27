@@ -68,7 +68,8 @@ module "cloud_run" {
   count = length(var.cloud_run_names)
   depends_on = [ 
     google_project_service.cloudresourcemanager,
-    module.bigquery
+    module.bigquery,
+    google_project_service.iam
   ]
 }
 

@@ -8,7 +8,6 @@ resource "time_sleep" "wait_60_seconds" {
   depends_on = [ google_project_service.compute ]
 }
 
-
 resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
   name                  = var.neg_name[count.index]
   region                = var.region
@@ -23,7 +22,7 @@ resource "google_compute_region_network_endpoint_group" "cloud_run_neg" {
 resource "google_compute_region_backend_service" "backend_service" {
   name                  = var.backend_service_name[count.index]
   region                = var.region
-  protocol              = "HTTPS"
+  protocol              = "HTTP"
   load_balancing_scheme = "INTERNAL_MANAGED"
   backend {
     group = google_compute_region_network_endpoint_group.cloud_run_neg[count.index].id
@@ -54,32 +53,18 @@ resource "google_compute_region_url_map" "url_map" {
   }
 }
 
-data "google_compute_region_ssl_certificate" "ssl_cert" {
-  name        = var.certificate_name
-  region = var.region
-}
-
-data "google_compute_subnetwork" "proxy_subnet" {
-  name          = var.subnet_name
-  region        = var.region
-  project = var.host_project_id
-}
-
-resource "google_compute_region_target_https_proxy" "https_proxy" {
+resource "google_compute_region_target_http_proxy" "http_proxy" {
   name    = var.http_proxy_name
   region  = var.region
   url_map = google_compute_region_url_map.url_map.id
-  ssl_certificates = [ data.google_compute_region_ssl_certificate.ssl_cert.id ]
-  depends_on = [ data.google_compute_region_ssl_certificate.ssl_cert ]
 }
 
-resource "google_compute_forwarding_rule" "https_forwarding_rule" {
+resource "google_compute_forwarding_rule" "http_forwarding_rule" {
   name                  = var.https_forwarding_rule_name
   region                = var.region
   load_balancing_scheme = "INTERNAL_MANAGED"
-  target                = google_compute_region_target_https_proxy.https_proxy.self_link
-  port_range            = "443"
-  network               = var.vpc_name
-  subnetwork            = var.subnet_private_name
-  depends_on = [ data.google_compute_subnetwork.proxy_subnet ]
+  target                = google_compute_region_target_http_proxy.http_proxy.self_link
+  port_range            = "80"
+  network = var.network_name
+  subnetwork = var.subnet_name
 }

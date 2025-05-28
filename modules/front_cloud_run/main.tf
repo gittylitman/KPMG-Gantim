@@ -25,7 +25,7 @@ resource "google_cloud_run_v2_service" "front_cloudrun" {
     vpc_access {
       network_interfaces {
         network = var.network_name
-        subnetwork = var.subnetwork_name
+        subnetwork = var.subnet_name
         tags = []
       }
     }

@@ -10,10 +10,10 @@ variable "front_container_image" {
   type = string
 }
 
-variable "network_name"{
+variable "network_name" {
   type = string
 }
 
-variable "subnetwork_name"{
+variable "subnet_name" {
   type = string
 }

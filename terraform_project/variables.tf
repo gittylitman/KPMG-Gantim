@@ -8,28 +8,25 @@ variable "host_project_id" {
 
 variable "project_name" {
   type = string
-  default = "nec-gnt"
 }
 
 variable "environment" {
   type = string
-  default = "dev"
 }
 
 # module network
 
 variable "vpc_name" {
   type = string
-  default = "dev"
 }
 
-variable "subnet_cloud_run_name" {
-  type = string
+variable "subnet_cloud_run_names" {
+  type = list(string)
+  default = [ "neg-gnt-compute-back-snet" , "neg-gnt-compute-front-snet" ]
 }
 
 variable "region" {
   type = string
-  default = "me-west1"
 }
 
 # module bigquery
@@ -43,38 +40,22 @@ variable "tables" {
       mode   = string
     }))
   }))
-  default = [
-    {
-      table_name = "table1"
-      columns = [
-        { name = "columnA", type = "STRING", mode = "NULLABLE" },
-        { name = "columnB", type = "STRING", mode = "NULLABLE" }
-      ]
-    }
-  ]
 }
 
 # module cloud run
 
 variable "cloud_run_names" {
   type = list(string)
-  default = ["crun-uploader", "crun-metrics"]
 }
 
 variable "container_image" {
   type = list(string)
 }
 
-variable "role_connect_big_query" {
-  type = string
-  default = "bigquery.dataEditor"
-}
-
 # module front cloud run
 
 variable "front_cloud_run_name" {
   type = list(string)
-  default = ["crun-front-uploader", "crun-front-metrics"]
 }
 
 variable "front_container_image" {
@@ -85,25 +66,8 @@ variable "front_container_image" {
 
 variable "neg_name" {
   type = list(string)
-  default = ["admin","metric"]
 }
 
 variable "backend_service_name" {
   type = list(string)
-  default = ["admin","metric"]
-}
-
-variable "subnet_proxy_name" {
-  type = string
-}
-
-variable "certificate_name" {
-  type = string
-}
-
-# module vm instance
-
-variable "zone_part" {
-  type = string
-  default = "a"
 }
